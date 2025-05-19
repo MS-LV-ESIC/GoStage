@@ -12,7 +12,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     //htmlspecialchars pour éviter tout attaque malveillante
 
     //Requête pour vérifier si l'utilisateur existe dans la BD
-    $sql = "SELECT * FROM utilisateur WHERE email = 'email' AND password =  '$password'";
+    $sql = "SELECT * FROM utilisateurs WHERE email = 'email' AND password =  '$password'";
     // Exécutez la requête, on se connecte à la base de données et on ecécute la requête
     $result = mysqli_query($conn, $sql);
     // Vérifiez si la requête  reussi
