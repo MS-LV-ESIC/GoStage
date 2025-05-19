@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet Piscine</title>
 </head>
 <body>
-    Bienvenue sur la page d'accueil
+    <h1>Bienvenue sur la page d'accueil</h1>
     <p>Vous êtes connecté</p>
 </body>
 </html>
