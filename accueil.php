@@ -44,6 +44,9 @@ $result = mysqli_query($conn, $query);
                 echo "<tr>";
             }
             ?>
+            <button onclick="location.href='profil.php'">
+
+            </button>
         </tbody>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
