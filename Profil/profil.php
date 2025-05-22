@@ -69,7 +69,7 @@ $image = $user['image']
                 <form id="updateImageForm" action="./Back-end/imageUpdate.php" method="POST" enctype="multipart/form-data"> <!-- ✅ Corrected 'multipart' -->
                         <!-- //si il y a une photo de profil dans le dossier image il va mettre cette image  -->
                         <?php if (!empty($image)) : ?> 
-                            <img src="<?php echo htmlspecialchars($image); ?>" alt="Photo de profil" width="250" height="250">
+                            <img src="<?php echo htmlspecialchars('./Back-end/' . $image); ?>" alt="Photo de profil" width="250" height="250">
                         <?php else : ?>
                         <!-- //si il n'y a pas de photo de profil il va mettre un image default -->
                             <img src="default.jpg" alt="Photo de profil par défaut" width="150" height="150">

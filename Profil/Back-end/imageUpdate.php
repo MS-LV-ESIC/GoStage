@@ -3,7 +3,7 @@ require_once('../../db.php');
 
 $imagePath = '';
 if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-    $targetDir = './Back-end/image/';
+    $targetDir = 'image/';
 
     // Ensure the folder exists
     if (!is_dir($targetDir)) {
