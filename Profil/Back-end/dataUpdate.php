@@ -1,5 +1,5 @@
 <?php
-require_once('../db.php');
+require_once('../../db.php');
 // require_once('profil.php');
 $id='3';
 
@@ -26,7 +26,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $result = mysqli_query($conn, $query);
 
         if($result){
-            header("Location: profil.php?success=Modification resussie");
+            header("Location: ../profil.php?success=Modification resussie");
             exit();
         }
     } 

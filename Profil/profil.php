@@ -65,19 +65,24 @@ $image = $user['image']
     <div class="profil">
         <div>
             <div class="photo">
-                <form id="updateImageForm" action="imageUpdate.php" method="POST" enctype="multipart/form-data"> <!-- ✅ Corrected 'multipart' -->
-                        <?php if (!empty($image)) : ?>
-                            <img src="image/<?php echo htmlspecialchars($image); ?>" alt="Photo de profil" width="150" height="150">
+                
+                <form id="updateImageForm" action="./Back-end/imageUpdate.php" method="POST" enctype="multipart/form-data"> <!-- ✅ Corrected 'multipart' -->
+                        <!-- //si il y a une photo de profil dans le dossier image il va mettre cette image  -->
+                        <?php if (!empty($image)) : ?> 
+                            <img src="<?php echo htmlspecialchars($image); ?>" alt="Photo de profil" width="250" height="250">
                         <?php else : ?>
+                        <!-- //si il n'y a pas de photo de profil il va mettre un image default -->
                             <img src="default.jpg" alt="Photo de profil par défaut" width="150" height="150">
                         <?php endif; ?>
-                    <input type="file" name="image" class="form-control mb-2">
+                        
+                         <input type="file" name="image" class="form-control mb-2">
                     <button type="submit" class="btn btn-primary">Changer la photo</button>
+
                 </form>
 
                 <div>
                     <h1>Mon Profil</h1>
-                    <form id="updateDataForm" action="dataUpdate.php" method="POST">
+                    <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
                         <table>
                             <thead>
                                 <tr>
@@ -154,15 +159,12 @@ $image = $user['image']
                 </div>
             </div>
             <h1>Offre sauvgarder</h1>
-            <div >
-                <div class="post">
-                    <img src="r.png" alt="">
-                    <div >
-                        <h3>Nom entreprise</h3>
-                        <p>Nome du poste</p>
-                    </div>
+            <div class="post">
+                <img src="r.png" alt="">
+                <div >
+                    <h3>Nom entreprise</h3>
+                    <p>Nome du poste</p>
                 </div>
-
             </div>
         </div>
 
