@@ -1,44 +1,41 @@
 <?php
 require_once("../../db.php");
-
+require_once("../../fieldsNames.php");
 
 $cvPath = '';
+$id = 3; // Replace with session-based or dynamic ID in production
 
-if(isset($_FILES['cv']) && $_FILES['cv']['error']==0){
-    $targetdir= 'cv/';
+if (isset($_FILES[FIELD_CV]) && $_FILES[FIELD_CV]['error'] === 0) {
+    $targetDir = 'cv/';
 
-    if(!is_dir($targetdir)){
-        mkdir($targetdir,0755,true);
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0755, true);
     }
 
-    $filename = basename($_FILES['cv']['name']);
-    $cvPath = $targetdir . $filename;
+    $filename = basename($_FILES[FIELD_CV]['name']);
+    $cvPath = $targetDir . $filename;
 
-    $id = 3;
+    if (move_uploaded_file($_FILES[FIELD_CV]['tmp_name'], $cvPath)) {
+        $cvPathSafe = mysqli_real_escape_string($conn, $cvPath);
 
-    if(move_uploaded_file($_FILES['cv']['tmp_name'], $cvPath)){
-        $query = "UPDATE utilisateurs SET cv = '$cvPath' WHERE id = $id";
+        $query = "UPDATE " . ETUDIANT . " SET " . FIELD_CV . " = '$cvPathSafe' WHERE " . ID . " = $id";
 
-        if(mysqli_query($conn, $query)){
+        if (mysqli_query($conn, $query)) {
             header("Location: ../profil.php");
             exit;
-        }else{
+        } else {
+            error_log("Erreur SQL : " . mysqli_error($conn));
             header("Location: ../profil.php");
-            echo "Erreur AQL : " . mysqli_error($conn);
-            ini_set('display_errors', 1);
-            ini_set('display_startup_errors', 1);
-            error_reporting(E_ALL);
-            
-            echo "<pre>";
-            print_r($_FILES);
-            echo "</pre>";
+            exit;
         }
-    }else{
+    } else {
+        error_log("Erreur lors du déplacement du fichier CV.");
         header("Location: ../profil.php");
-        echo "<script>console.log('Erreur lors du déplacement du fichier.');</script>";
+        exit;
     }
-}else{
+} else {
+    error_log("Aucun fichier CV envoyé ou erreur lors de l'envoi.");
     header("Location: ../profil.php");
-    echo "<script>console.log('Erreur lors du déplacement du fichier.');</script>";
+    exit;
 }
 ?>
