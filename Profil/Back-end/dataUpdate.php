@@ -20,6 +20,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $cursus = mysqli_real_escape_string($conn, trim($_POST['cursus']));
         $fields[] = "`cursus` = '$cursus'";
     }
+    if(isset($_POST['aPropos']) && $_POST['aPropos'] !==''){
+        $aPropos = mysqli_real_escape_string($conn, trim($_POST['aPropos']));
+        $fields[] = "`aPropos` = '$aPropos'";
+    }
+
 
     if(!empty($fields)){
         $query = "UPDATE `utilisateurs` SET " . implode(', ', $fields) . " WHERE `id` = $id";

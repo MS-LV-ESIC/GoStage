@@ -7,7 +7,8 @@ $query = "SELECT * FROM utilisateurs WHERE id = '$id'";
 
 $result = mysqli_query($conn, $query);
 $user = mysqli_fetch_assoc($result);
-$image = $user['image']
+$image = $user['image'];
+$cv = $user['cv'] ?? '';
 ?>
 
 
@@ -72,7 +73,7 @@ $image = $user['image']
                             <img src="<?php echo htmlspecialchars('./Back-end/' . $image); ?>" alt="Photo de profil" width="250" height="250">
                         <?php else : ?>
                         <!-- //si il n'y a pas de photo de profil il va mettre un image default -->
-                            <img src="default.jpg" alt="Photo de profil par défaut" width="150" height="150">
+                            <img src="Back-end/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
                         <?php endif; ?>
                         
                          <input type="file" name="image" class="form-control mb-2">
@@ -147,15 +148,28 @@ $image = $user['image']
                                             Appliquer
                                         </button>
                                     </th>
-                                    <th>
-                                        Cv en pièce jointe
-                                        <input type="file" name="cv">
-                                    </th>
                                 </tr>
                             </thead>
                         </table>
-                        <button type="submit">Envoyer</button>
                     </form>
+                    <form id="updateCvForm" action="./Back-end/cvUpdate.php" method="POST" enctype="multipart/form-data">
+                        <!-- //si il y a une photo de profil dans le dossier image il va mettre cette image  -->
+                         <!-- <h4>CV :</h4> -->
+                        <?php if (!empty($cv)) : ?> 
+                            <p src="<?php echo htmlspecialchars('./Back-end/' . $cv); ?>" alt="CV">CV :</p>
+                        <?php endif; ?>
+                         <input type="file" name="cv" class="form-control mb-2">
+
+                    <button type="submit">Mettre a jour le CV</button>
+                    <?php if (!empty($cv)) : ?>
+                        <a href="<?php echo './Back-end/' . htmlspecialchars($cv); ?>" download>
+                            <button type="button">Télécharger le CV</button>
+                        </a>
+                    <?php endif; ?>
+
+                    </form>
+
+                    
                 </div>
             </div>
             <h1>Offre sauvgarder</h1>
@@ -170,6 +184,28 @@ $image = $user['image']
 
         <div class="aPropos">
             <h1>A propos de moi</h1>
+            <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
+                <th>
+                    <span id="label-aPropos" onclick="showInput('aPropos')">aPropos: <span id="aPropos-value"></span></span>
+                    <textarea  
+                        name="aPropos" 
+                        id="aPropos" 
+                        style="display:none;" 
+                        disabled 
+                        maxlength="500" 
+                        rows="10" 
+                        cols="50"
+                        ></textarea>
+                    <button 
+                        type="submit" 
+                        id="apply-aPropos" 
+                        style="display:none;" 
+                        onclick="applyInput('aPropos')"
+                        >
+                        Appliquer
+                    </button>
+                </th>
+            </form>
             <p id="aPropos-value"></p>
         </div>
     </div>
