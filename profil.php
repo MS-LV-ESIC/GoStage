@@ -1,6 +1,6 @@
 <?php
-require_once '../db.php';
-require_once("../fieldsNames.php");
+require_once 'db.php';
+require_once("fieldsNames.php");
 
 $id = "3"; // Replace with session or GET logic in production
 $query = "SELECT * FROM " . ETUDIANT . " WHERE " . ID . " = '$id'";
@@ -23,6 +23,7 @@ $cv = $user[FIELD_CV] ?? '';
         h1 { padding:10px; }
         .profil { display:flex; }
         .photo { display:flex; }
+        .uploadPhoto{display:flex; flex-direction:column}
         .post { display:flex; flex-direction: row; align-items: flex-start; }
         .aPropos { background-color:white; padding: 10px; }
     </style>
@@ -32,11 +33,11 @@ $cv = $user[FIELD_CV] ?? '';
 <div class="profil">
     <div>
         <div class="photo">
-            <form id="updateImageForm" action="./Back-end/imageUpdate.php" method="POST" enctype="multipart/form-data">
+            <form class="uploadPhoto" id="updateImageForm" action="./Profil-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
-                    <img src="<?php echo htmlspecialchars('./Back-end/' . $image); ?>" alt="Photo de profil" width="250" height="250">
+                    <img src="<?php echo htmlspecialchars('./Profil-be/' . $image); ?>" alt="Photo de profil" width="250" height="250">
                 <?php else : ?>
-                    <img src="Back-end/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
+                    <img src="Profil-be/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
                 <?php endif; ?>
                 <input type="file" name="<?php echo FIELD_IMAGE; ?>" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Changer la photo</button>
@@ -44,7 +45,7 @@ $cv = $user[FIELD_CV] ?? '';
 
             <div>
                 <h1>Mon Profil</h1>
-                <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
+                <form id="updateDataForm" action="./Profil-be/dataUpdate.php" method="POST">
                     <table>
                         <thead>
                             <tr>
@@ -80,14 +81,14 @@ $cv = $user[FIELD_CV] ?? '';
                     </table>
                 </form>
 
-                <form id="updateCvForm" action="./Back-end/cvUpdate.php" method="POST" enctype="multipart/form-data">
+                <form id="updateCvForm" action="./Profil-be/cvUpdate.php" method="POST" enctype="multipart/form-data">
                     <?php if (!empty($cv)) : ?> 
                         <p>CV: <?php echo basename($cv); ?></p>
                     <?php endif; ?>
                     <input type="file" name="<?php echo FIELD_CV; ?>" class="form-control mb-2">
                     <button type="submit">Mettre à jour le CV</button>
                     <?php if (!empty($cv)) : ?>
-                        <a href="<?php echo './Back-end/' . htmlspecialchars($cv); ?>" download>
+                        <a href="<?php echo './Profil-be/' . htmlspecialchars($cv); ?>" download>
                             <button type="button">Télécharger le CV</button>
                         </a>
                     <?php endif; ?>
@@ -107,7 +108,7 @@ $cv = $user[FIELD_CV] ?? '';
 
     <div class="aPropos">
         <h1>A propos de moi</h1>
-        <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
+        <form id="updateDataForm" action="./Profil-be/dataUpdate.php" method="POST">
             <th>
                 <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
                     A propos: <span id="<?php echo FIELD_APROPOS; ?>-value"></span>

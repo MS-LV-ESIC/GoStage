@@ -1,6 +1,6 @@
 <?php
-require_once("../../db.php");
-require_once("../../fieldsNames.php");
+require_once("../db.php");
+require_once("../fieldsNames.php");
 
 $cvPath = '';
 $id = 3; // Replace with session-based or dynamic ID in production

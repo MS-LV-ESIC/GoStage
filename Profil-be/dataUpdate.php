@@ -1,6 +1,6 @@
 <?php
-require_once('../../db.php');
-require_once('../../fieldsNames.php');
+require_once('../db.php');
+require_once('../fieldsNames.php');
 
 $id = '3';
 

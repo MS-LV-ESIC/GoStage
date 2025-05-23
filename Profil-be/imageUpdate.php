@@ -1,6 +1,6 @@
 <?php 
-require_once('../../db.php');
-require_once('../../fieldsNames.php');
+require_once('../db.php');
+require_once('../fieldsNames.php');
 
 $imagePath = '';
 $id = 3; // Replace with actual user ID via session or token in production
