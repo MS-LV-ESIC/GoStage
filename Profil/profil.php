@@ -1,237 +1,143 @@
 <?php
 require_once '../db.php';
+require_once("../fieldsNames.php");
 
-// Example: get user by email (replace with your logic)
-$id = "3"; // Or from $_SESSION, $_GET, etc.
-$query = "SELECT * FROM utilisateurs WHERE id = '$id'";
-
+$id = "3"; // Replace with session or GET logic in production
+$query = "SELECT * FROM " . ETUDIANT . " WHERE " . ID . " = '$id'";
 $result = mysqli_query($conn, $query);
 $user = mysqli_fetch_assoc($result);
-$image = $user['image'];
-$cv = $user['cv'] ?? '';
+$image = $user[FIELD_IMAGE] ?? '';
+$cv = $user[FIELD_CV] ?? '';
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+    <title>Profil</title>
     <style>
-        body{
-            background-color:#D9D9D9;
-        }
-        table{
-        }
-        tr{    /* to change remove the point . */
-            padding: 10px;
-            color: black;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 300px;
-        }
-        th{
-            text-align:start
-        }
-        h1 {
-            padding:10px
-        }
-        .profil{
-            display:flex
-        }
-        .photo{
-            display:flex;
-        }
-        .post{
-            display:flex;
-            flex-direction: row;
-            align-items: flex-start;
-        }
-
-        .aPropos{
-            background-color:white;
-            padding: 10px;
-        }
+        body { background-color:#D9D9D9; }
+        tr { padding: 10px; color: black; display: flex; flex-direction: column; align-items: flex-start; width: 300px; }
+        th { text-align: start; }
+        h1 { padding:10px; }
+        .profil { display:flex; }
+        .photo { display:flex; }
+        .post { display:flex; flex-direction: row; align-items: flex-start; }
+        .aPropos { background-color:white; padding: 10px; }
     </style>
 </head>
 <body>
 
+<div class="profil">
+    <div>
+        <div class="photo">
+            <form id="updateImageForm" action="./Back-end/imageUpdate.php" method="POST" enctype="multipart/form-data">
+                <?php if (!empty($image)) : ?> 
+                    <img src="<?php echo htmlspecialchars('./Back-end/' . $image); ?>" alt="Photo de profil" width="250" height="250">
+                <?php else : ?>
+                    <img src="Back-end/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
+                <?php endif; ?>
+                <input type="file" name="<?php echo FIELD_IMAGE; ?>" class="form-control mb-2">
+                <button type="submit" class="btn btn-primary">Changer la photo</button>
+            </form>
 
+            <div>
+                <h1>Mon Profil</h1>
+                <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span id="label-<?php echo FIELD_NAME; ?>" onclick="showInput('<?php echo FIELD_NAME; ?>')">
+                                        Nom: <span id="<?php echo FIELD_NAME; ?>-value"></span>
+                                    </span>
+                                    <input type="text" name="<?php echo FIELD_NAME; ?>" id="<?php echo FIELD_NAME; ?>" style="display:none;" disabled maxlength="255">
+                                    <button type="submit" id="apply-<?php echo FIELD_NAME; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_NAME; ?>')">Appliquer</button>
+                                </th>
 
-    <div class="profil">
-        <div>
-            <div class="photo">
-                
-                <form id="updateImageForm" action="./Back-end/imageUpdate.php" method="POST" enctype="multipart/form-data"> <!-- ✅ Corrected 'multipart' -->
-                        <!-- //si il y a une photo de profil dans le dossier image il va mettre cette image  -->
-                        <?php if (!empty($image)) : ?> 
-                            <img src="<?php echo htmlspecialchars('./Back-end/' . $image); ?>" alt="Photo de profil" width="250" height="250">
-                        <?php else : ?>
-                        <!-- //si il n'y a pas de photo de profil il va mettre un image default -->
-                            <img src="Back-end/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
-                        <?php endif; ?>
-                        
-                         <input type="file" name="image" class="form-control mb-2">
-                    <button type="submit" class="btn btn-primary">Changer la photo</button>
+                                <th>
+                                    <span id="label-<?php echo FIELD_PENOM; ?>" onclick="showInput('<?php echo FIELD_PENOM; ?>')">
+                                        Prénom: <span id="<?php echo FIELD_PENOM; ?>-value"></span>
+                                    </span>
+                                    <input type="text" name="<?php echo FIELD_PENOM; ?>" id="<?php echo FIELD_PENOM; ?>" style="display:none;" disabled maxlength="255">
+                                    <button type="submit" id="apply-<?php echo FIELD_PENOM; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_PENOM; ?>')">Appliquer</button>
+                                </th>
 
+                                <th>
+                                    <span>Email: <span id="email-value"></span></span>
+                                </th>
+
+                                <th>
+                                    <span id="label-<?php echo FIELD_CURSUS; ?>" onclick="showInput('<?php echo FIELD_CURSUS; ?>')">
+                                        Cursus: <span id="<?php echo FIELD_CURSUS; ?>-value"></span>
+                                    </span>
+                                    <input type="text" name="<?php echo FIELD_CURSUS; ?>" id="<?php echo FIELD_CURSUS; ?>" style="display:none;" disabled maxlength="255">
+                                    <button type="submit" id="apply-<?php echo FIELD_CURSUS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_CURSUS; ?>')">Appliquer</button>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
                 </form>
 
-                <div>
-                    <h1>Mon Profil</h1>
-                    <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <span id="label-nom" onclick="showInput('nom')">Nom: <span id="nom-value"></span></span>
-                                        <input 
-                                            type="text" 
-                                            name="nom" 
-                                            id="nom" 
-                                            style="display:none;" 
-                                            disabled
-                                            maxlength="255"
-                                            >
-                                        <button 
-                                            type="submit" 
-                                            id="apply-nom" 
-                                            style="display:none;" 
-                                            onclick="applyInput('nom')"
-                                            >
-                                            Appliquer
-                                        </button>
-                                    </th>
-
-                                    <th>
-                                        <span id="label-prenom" onclick="showInput('prenom')">Prenom: <span id="prenom-value"></span></span>
-                                        <input 
-                                            type="text" 
-                                            name="prenom" 
-                                            id="prenom" 
-                                            style="display:none;" 
-                                            disabled
-                                            maxlength="255"
-                                            >
-                                        <button 
-                                            type="submit" 
-                                            id="apply-prenom" 
-                                            style="display:none;" 
-                                            onclick="applyInput('prenom')"
-                                            >
-                                            Appliquer
-                                        </button>
-                                    </th>
-                                    <th>
-                                        <span>Email: <span id="email-value"></span></span>
-                                    </th>
-                                    <th>
-                                        <span id="label-cursus" onclick="showInput('cursus')">Nom du cursus: <span id="cursus-value"></span></span>
-                                        <input 
-                                            type="text" 
-                                            name="cursus" 
-                                            id="cursus" 
-                                            style="display:none;" 
-                                            disabled
-                                            maxlength="255"
-                                        >
-                                        <button 
-                                            type="submit" 
-                                            id="apply-cursus" 
-                                            style="display:none;" 
-                                            onclick="applyInput('cursus')"
-                                            >
-                                            Appliquer
-                                        </button>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </form>
-                    <form id="updateCvForm" action="./Back-end/cvUpdate.php" method="POST" enctype="multipart/form-data">
-                        <!-- //si il y a une photo de profil dans le dossier image il va mettre cette image  -->
-                         <!-- <h4>CV :</h4> -->
-                        <?php if (!empty($cv)) : ?> 
-                            <p src="<?php echo htmlspecialchars('./Back-end/' . $cv); ?>" alt="CV">CV :</p>
-                        <?php endif; ?>
-                         <input type="file" name="cv" class="form-control mb-2">
-
-                    <button type="submit">Mettre a jour le CV</button>
+                <form id="updateCvForm" action="./Back-end/cvUpdate.php" method="POST" enctype="multipart/form-data">
+                    <?php if (!empty($cv)) : ?> 
+                        <p>CV: <?php echo basename($cv); ?></p>
+                    <?php endif; ?>
+                    <input type="file" name="<?php echo FIELD_CV; ?>" class="form-control mb-2">
+                    <button type="submit">Mettre à jour le CV</button>
                     <?php if (!empty($cv)) : ?>
                         <a href="<?php echo './Back-end/' . htmlspecialchars($cv); ?>" download>
                             <button type="button">Télécharger le CV</button>
                         </a>
                     <?php endif; ?>
-
-                    </form>
-
-                    
-                </div>
-            </div>
-            <h1>Offre sauvgarder</h1>
-            <div class="post">
-                <img src="r.png" alt="">
-                <div >
-                    <h3>Nom entreprise</h3>
-                    <p>Nome du poste</p>
-                </div>
+                </form>
             </div>
         </div>
 
-        <div class="aPropos">
-            <h1>A propos de moi</h1>
-            <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
-                <th>
-                    <span id="label-aPropos" onclick="showInput('aPropos')">aPropos: <span id="aPropos-value"></span></span>
-                    <textarea  
-                        name="aPropos" 
-                        id="aPropos" 
-                        style="display:none;" 
-                        disabled 
-                        maxlength="500" 
-                        rows="10" 
-                        cols="50"
-                        ></textarea>
-                    <button 
-                        type="submit" 
-                        id="apply-aPropos" 
-                        style="display:none;" 
-                        onclick="applyInput('aPropos')"
-                        >
-                        Appliquer
-                    </button>
-                </th>
-            </form>
-            <p id="aPropos-value"></p>
+        <h1>Offres sauvegardées</h1>
+        <div class="post">
+            <img src="r.png" alt="">
+            <div>
+                <h3>Nom entreprise</h3>
+                <p>Nom du poste</p>
+            </div>
         </div>
     </div>
 
-    
-</body>
-</html>
+    <div class="aPropos">
+        <h1>A propos de moi</h1>
+        <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
+            <th>
+                <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
+                    A propos: <span id="<?php echo FIELD_APROPOS; ?>-value"></span>
+                </span>
+                <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="10" cols="50"></textarea>
+                <button type="submit" id="apply-<?php echo FIELD_APROPOS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_APROPOS; ?>')">Appliquer</button>
+            </th>
+        </form>
+        <p id="<?php echo FIELD_APROPOS; ?>-value"></p>
+    </div>
+</div>
+
 <script>
-document.querySelector('form').addEventListener('submit', function() {
-    document.querySelectorAll('input').forEach(function(input) {
-        input.disabled = false;
+document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function() {
+        form.querySelectorAll('input, textarea').forEach(function(input) {
+            input.disabled = false;
+        });
     });
 });
 
-
-['nom', 'prenom'].forEach(function(field) {
+['<?php echo FIELD_NAME; ?>', '<?php echo FIELD_PENOM; ?>'].forEach(function(field) {
     document.getElementById(field).addEventListener('input', function() {
         this.value = this.value.replace(/[^A-Za-zÀ-ÿ' ]/g, '');
     });
 });
 
-//Verfifie si il y a des valeur dans les input , si non il y a une erreure qui va sortir qui va dire que il ny a pas de valeur dans l'input
 document.querySelector('#updateDataForm').addEventListener('submit', function(e) {
-    // Check if at least one field is not empty
     let hasValue = false;
-    ['nom', 'prenom', 'cursus'].forEach(function(field) {
+    ['<?php echo FIELD_NAME; ?>', '<?php echo FIELD_PENOM; ?>', '<?php echo FIELD_CURSUS; ?>'].forEach(function(field) {
         let input = document.getElementById(field);
         if (input && input.value.trim() !== "") {
             hasValue = true;
@@ -243,35 +149,33 @@ document.querySelector('#updateDataForm').addEventListener('submit', function(e)
     }
 });
 
-let user = <?php  echo json_encode($user); ?>
+let user = <?php echo json_encode($user); ?>;
 
-document.getElementById('nom-value').textContent = user.nom;
-document.getElementById('prenom-value').textContent = user.prenom;
-document.getElementById('email-value').textContent = user.email;
-document.getElementById('cursus-value').textContent = user.cursus;
-document.getElementById('aPropos-value').textContent = user.aPropos;
+document.getElementById('<?php echo FIELD_NAME; ?>-value').textContent = user["<?php echo FIELD_NAME; ?>"];
+document.getElementById('<?php echo FIELD_PENOM; ?>-value').textContent = user["<?php echo FIELD_PENOM; ?>"];
+document.getElementById('email-value').textContent = user["<?php echo FIELD_EMAIL; ?>"];
+document.getElementById('<?php echo FIELD_CURSUS; ?>-value').textContent = user["<?php echo FIELD_CURSUS; ?>"];
+document.getElementById('<?php echo FIELD_APROPOS; ?>-value').textContent = user["<?php echo FIELD_APROPOS; ?>"];
 
 function showInput(field) {
     document.getElementById('label-' + field).style.display = 'none';
-    var input = document.getElementById(field);
+    let input = document.getElementById(field);
     input.style.display = 'inline';
     input.disabled = false;
-    input.value = user[field]; // Pre-fill with current value
+    input.value = user[field];
     input.focus();
     document.getElementById('apply-' + field).style.display = 'inline';
 }
 
 function applyInput(field) {
-    var input = document.getElementById(field);
-
-    user[field] = input.value; // Update user object
-    document.getElementById(field + '-value').textContent = input.value; // Update label
+    let input = document.getElementById(field);
+    user[field] = input.value;
+    document.getElementById(field + '-value').textContent = input.value;
     input.style.display = 'none';
-    // input.disabled = true;
     document.getElementById('apply-' + field).style.display = 'none';
     document.getElementById('label-' + field).style.display = 'inline';
 }
-
-
-
 </script>
+
+</body>
+</html>

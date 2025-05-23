@@ -1,46 +1,43 @@
 <?php 
 require_once('../../db.php');
+require_once('../../fieldsNames.php');
 
-//set to nothing 
 $imagePath = '';
-if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+$id = 3; // Replace with actual user ID via session or token in production
+
+if (isset($_FILES[FIELD_IMAGE]) && $_FILES[FIELD_IMAGE]['error'] === 0) {
     $targetDir = 'image/';
 
-    // Ensure the folder exists if not this script will create one 
     if (!is_dir($targetDir)) {
         mkdir($targetDir, 0755, true);
     }
 
-    // Take only the last part of the url when the file is uploaded
-    // transform:   C:/Users/User/Pictures/photo.jpg => image/image.png
-    $filename = basename($_FILES['image']['name']);
+    $filename = basename($_FILES[FIELD_IMAGE]['name']);
     $imagePath = $targetDir . $filename;
-    $id = 3; //I will need to take the id thta check the email via the connexion
 
-    // Move the uploaded file from tmp_name to the $filePath
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+    // Move uploaded file
+    if (move_uploaded_file($_FILES[FIELD_IMAGE]['tmp_name'], $imagePath)) {
+        // Sanitize file path for DB insertion
+        $imagePathSafe = mysqli_real_escape_string($conn, $imagePath);
 
-        // Update user record
-        $query = "UPDATE utilisateurs SET image = '$imagePath' WHERE id = $id";
+        $query = "UPDATE " . ETUDIANT . " SET " . FIELD_IMAGE . " = '$imagePathSafe' WHERE " . ID . " = $id";
 
-        //Execute mysql_query that connect and then execute the query that i declared before
         if (mysqli_query($conn, $query)) {
-            // ✅ Redirect back to profile
             header("Location: ../profil.php");
             exit;
         } else {
+            error_log("Erreur SQL : " . mysqli_error($conn));
             header("Location: ../profil.php");
-            echo "Erreur SQL : " . mysqli_error($conn);
+            exit;
         }
-
     } else {
+        error_log("Erreur lors du déplacement du fichier.");
         header("Location: ../profil.php");
-        echo "<script>console.log('Aucun fichier envoyé ou erreur lors de l\'envoi.');</script>";
+        exit;
     }
-
 } else {
+    error_log("Aucun fichier envoyé ou erreur lors de l'envoi.");
     header("Location: ../profil.php");
-    echo "<script>console.log('Aucun fichier envoyé ou erreur lors de l\'envoi.');</script>";
-
+    exit;
 }
 ?>
