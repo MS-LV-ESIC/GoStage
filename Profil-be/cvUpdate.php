@@ -21,21 +21,21 @@ if (isset($_FILES[FIELD_CV]) && $_FILES[FIELD_CV]['error'] === 0) {
         $query = "UPDATE " . ETUDIANT . " SET " . FIELD_CV . " = '$cvPathSafe' WHERE " . ID . " = $id";
 
         if (mysqli_query($conn, $query)) {
-            header("Location: ../profil.php");
+            header("Location: ../view/profil.php");
             exit;
         } else {
             error_log("Erreur SQL : " . mysqli_error($conn));
-            header("Location: ../profil.php");
+            header("Location: ../view/profil.php");
             exit;
         }
     } else {
         error_log("Erreur lors du déplacement du fichier CV.");
-        header("Location: ../profil.php");
+        header("Location: ../view/profil.php");
         exit;
     }
 } else {
     error_log("Aucun fichier CV envoyé ou erreur lors de l'envoi.");
-    header("Location: ../profil.php");
+    header("Location: ../view/profil.php");
     exit;
 }
 ?>

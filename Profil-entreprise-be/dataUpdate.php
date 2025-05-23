@@ -22,16 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = mysqli_query($conn, $query);
 
         if ($result) {
-            header("Location: ../profil-entreprise.php?success=Modification réussie");
+            header("Location: ../view/profil-entreprise.php?success=Modification réussie");
             exit();
         } else {
             $error = mysqli_error($conn);
-            header("Location: ../profil-entreprise.php?success=Modification réussie");
+            header("Location: ../view/profil-entreprise.php?success=Modification réussie");
             exit();
         }
     } 
 } else {
-    header("Location: ../profil-entreprise.php?error=BadRequest");
+    header("Location: ../view/profil-entreprise.php?error=BadRequest");
     exit;
 }
 ?>

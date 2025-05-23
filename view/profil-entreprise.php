@@ -1,6 +1,6 @@
 <?php
-require_once 'db.php';
-require_once("fieldsNames.php");
+require_once '../db.php';
+require_once("../fieldsNames.php");
 
 $id = "1"; // Replace with session or GET logic in production
 $query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$id'";
@@ -34,11 +34,11 @@ $image = $user[FIELD_IMAGE] ?? '';
         <div class="photo">
 
             <!-- Permet de telecharger et modifier la photo de profil -->
-            <form class="uploadPhoto" id="updateImageForm" action="./Profil-entreprise-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
+            <form class="uploadPhoto" id="updateImageForm" action="../Profil-entreprise-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
-                    <img src="<?php echo htmlspecialchars('./Profil-entreprise-be/' . $image); ?>" alt="Photo de profil" width="250" height="250">
+                    <img src="<?php echo htmlspecialchars('../Profil-entreprise-be/' . $image); ?>" alt="Photo de profil" width="250" height="250">
                 <?php else : ?>
-                    <img src="./Profil-entreprise-be/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
+                    <img src="../Profil-entreprise-be/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
                 <?php endif; ?>
                 <input type="file" name="<?php echo FIELD_IMAGE; ?>" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Changer la photo</button>
@@ -47,7 +47,7 @@ $image = $user[FIELD_IMAGE] ?? '';
             <div>
                 <h1>Mon Profil</h1>
                 <!-- updateDataForm Permet de modifier la les information sur l'entreprise -->
-                <form id="updateDataForm" action="./Profil-entreprise-be/dataUpdate.php" method="POST">
+                <form id="updateDataForm" action="../Profil-entreprise-be/dataUpdate.php" method="POST">
                     <table>
                         <thead>
                             <tr>
@@ -90,7 +90,7 @@ $image = $user[FIELD_IMAGE] ?? '';
         <h1>A propos de l'entreprise :</h1>
         <form 
             id="updateDataForm" 
-            action="./Profil-entreprise-be/dataUpdate.php" 
+            action="../Profil-entreprise-be/dataUpdate.php" 
             method="POST">
             <th>
                 <span 
