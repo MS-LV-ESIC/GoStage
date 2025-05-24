@@ -1,6 +1,7 @@
 <?php
 require_once '../db.php';
 require_once("../fieldsNames.php");
+require ('../Composant/header.php');
 
 $id = "1"; // Replace with session or GET logic in production
 $query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$id'";
