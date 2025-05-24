@@ -65,7 +65,7 @@
     </style>
     <header>
         <img src="/Logo_site_stage_-_2-removebg-preview.png" alt="" width="100px">
-        <a href="/inscription.html"><i class="fa-solid fa-user"
+        <a href="/connexion.html"><i class="fa-solid fa-user"
                 style="color: #ffffff; font-size: 150%; margin: 40px;"></i></a>
     </header>
     <div class="paragraphe">
