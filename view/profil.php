@@ -175,20 +175,23 @@ $cv = $user[FIELD_CV] ?? '';
         <div class="post">
             <img src="r.png" alt="">
             <form id="updateDataForm" action="../Profil-be/dataUpdate.php" method="POST">
-            <th>
-                <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
-                    A propos: <span id="<?php echo FIELD_APROPOS; ?>-value"></span>
-                </span>
-                <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="10" cols="50"></textarea>
-                <button type="submit" id="apply-<?php echo FIELD_APROPOS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_APROPOS; ?>')">Appliquer</button>
-            </th>
-        </form>
+                <th>
+                    <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
+                        A propos: <span id="<?php echo FIELD_APROPOS; ?>-value"></span>
+                    </span>
+                    <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="10" cols="50"></textarea>
+                    <button type="submit" id="apply-<?php echo FIELD_APROPOS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_APROPOS; ?>')">Appliquer</button>
+                </th>
+            </form>
         <p id="<?php echo FIELD_APROPOS; ?>-value"></p>
         </div>
     </div>
 
     <div class="Offre">
         <h1>Offre sauvegarder</h1>
+        <?php 
+            require_once("../composant/tableauDeBord.php")
+        ?>
         <p id="Offre-value"></p>
     </div>
 </div>

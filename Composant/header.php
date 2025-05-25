@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/5d4f51e2a9.js" crossorigin="anonymous"></script>
-    <title>Document</title>
 </head>
 <body>
     <style>
@@ -18,7 +17,7 @@
     </style>
     <header>
         <div class="header-logo">
-            <img src="Logo_site_stage_-_2-removebg-preview.png" alt="" width="100px">
+            <img src="/GoStage/composant/LogoPrincipale.png" alt="" width="120px">
         </div>
         <div class="header-icon">
             <i class="fa-regular fa-bell" style="color: white; font-size: 150%; margin: 40px;"></i>
