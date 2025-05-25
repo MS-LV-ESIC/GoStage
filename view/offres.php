@@ -1,7 +1,8 @@
 <?php
 
 require_once("../db.php");
-$id=3;
+require_once("../fieldsNames.php");
+
 ?>
 
 <!DOCTYPE html>

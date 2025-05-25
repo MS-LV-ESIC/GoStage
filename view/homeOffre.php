@@ -2,6 +2,7 @@
 
 require_once("../db.php");
 require_once("../fieldsNames.php");
+$id = $_GET['id'];
 $query = "SELECT 
   o.". ID_OFFRE ." AS ". ID_OFFRE .",
   o.". INTITULE ." AS ". INTITULE .",
@@ -15,7 +16,7 @@ $query = "SELECT
   e.". FIELD_EMAIL ." AS ". FIELD_EMAIL ."
 FROM ". OFFRES ." o
 JOIN ". ENTREPRISE ." e ON o.". ID_ENTREPRISE ." = e.". ID_ENTREPRISE ."
-WHERE o.". ID_OFFRE ." = 2";
+WHERE o.". ID_OFFRE ." = $id";
 
 
 

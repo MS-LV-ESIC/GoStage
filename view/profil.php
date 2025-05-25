@@ -108,6 +108,7 @@ $cv = $user[FIELD_CV] ?? '';
 <div class="profil">
     <div class="info">
         <div class="photo">
+            
             <form class="uploadPhoto" id="updateImageForm" action="../Profil-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
                     <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="375" height="350">

@@ -8,7 +8,7 @@ define('FIELD_EMAIL', 'mail');
 define('FIELD_CURSUS', 'cursus');
 define('FIELD_CV', 'cv');
 define('FIELD_IMAGE', 'image');
-define('FIELD_APROPOS', 'aProposs');
+define('FIELD_APROPOS', 'description');
 
 
 define('ID_ENTREPRISE', 'id_entreprise');
