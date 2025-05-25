@@ -23,21 +23,21 @@ if (isset($_FILES[FIELD_IMAGE]) && $_FILES[FIELD_IMAGE]['error'] === 0) {
         $query = "UPDATE " . ENTREPRISE . " SET " . FIELD_IMAGE . " = '$imagePathSafe' WHERE " . ID_ENTREPRISE . " = $id";
 
         if (mysqli_query($conn, $query)) {
-            header("Location: ../profil-entreprise.php");
+            header("Location: ../view/profil-entreprise.php");
             exit;
         } else {
             error_log("Erreur SQL : " . mysqli_error($conn));
-            header("Location: ../profil-entreprise.php");
+            header("Location: ../view/profil-entreprise.php");
             exit;
         }
     } else {
         error_log("Erreur lors du déplacement du fichier.");
-        header("Location: ../profil-entreprise.php");
+        header("Location: ../view/profil-entreprise.php");
         exit;
     }
 } else {
     error_log("Aucun fichier envoyé ou erreur lors de l'envoi.");
-    header("Location: ../profil-entreprise.php");
+    header("Location: ../view/profil-entreprise.php");
     exit;
 }
 ?>

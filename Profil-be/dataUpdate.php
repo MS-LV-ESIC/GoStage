@@ -2,7 +2,7 @@
 require_once('../db.php');
 require_once('../fieldsNames.php');
 
-$id = '3';
+$id = 1;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fields = [];

@@ -3,7 +3,7 @@ require_once('../db.php');
 require_once('../fieldsNames.php');
 
 $imagePath = '';
-$id = 3; // Replace with actual user ID via session or token in production
+$id = 1; // Replace with actual user ID via session or token in production
 
 if (isset($_FILES[FIELD_IMAGE]) && $_FILES[FIELD_IMAGE]['error'] === 0) {
     $targetDir = 'image/';
@@ -26,17 +26,17 @@ if (isset($_FILES[FIELD_IMAGE]) && $_FILES[FIELD_IMAGE]['error'] === 0) {
             header("Location: ../view/profil.php");
             exit;
         } else {
-            error_log("Erreur SQL : " . mysqli_error($conn));
             header("Location: ../view/profil.php");
+            echo "<script>console.log('Upload failed: Aucun fichier envoyé ou erreur lors de l\'envoi.');</script>";
             exit;
         }
     } else {
-        error_log("Erreur lors du déplacement du fichier.");
+        echo "<script>console.log('Upload failed: Aucun fichier envoyé ou erreur lors de l\'envoi.');</script>";
         header("Location: ../view/profil.php");
         exit;
     }
 } else {
-    error_log("Aucun fichier envoyé ou erreur lors de l'envoi.");
+    echo "<script>console.log('Upload failed: Aucun fichier envoyé ou erreur lors de l\'envoi.');</script>";
     header("Location: ../view/profil.php");
     exit;
 }

@@ -3,7 +3,7 @@ require_once("../db.php");
 require_once("../fieldsNames.php");
 
 $cvPath = '';
-$id = 3; // Replace with session-based or dynamic ID in production
+$id = 1; // Replace with session-based or dynamic ID in production
 
 if (isset($_FILES[FIELD_CV]) && $_FILES[FIELD_CV]['error'] === 0) {
     $targetDir = 'cv/';

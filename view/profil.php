@@ -3,7 +3,7 @@ require_once '../db.php';
 require_once("../fieldsNames.php");
 require ('../Composant/header.php');
 
-$id = "3"; // Replace with session or GET logic in production
+$id = "1"; // Replace with session or GET logic in production
 $query = "SELECT * FROM " . ETUDIANT . " WHERE " . ID . " = '$id'";
 $result = mysqli_query($conn, $query);
 $user = mysqli_fetch_assoc($result);
@@ -108,11 +108,11 @@ $cv = $user[FIELD_CV] ?? '';
 <div class="profil">
     <div class="info">
         <div class="photo">
-            
+
             <form class="uploadPhoto" id="updateImageForm" action="../Profil-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
                     <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="375" height="350">
-                <?php else : ?>
+                    <?php else : ?>
                     <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
                 <?php endif; ?>
                 <input type="file" name="<?php echo FIELD_IMAGE; ?>" class="form-control mb-2">
@@ -174,7 +174,6 @@ $cv = $user[FIELD_CV] ?? '';
 
         <h1>A propos de moi</h1>
         <div class="post">
-            <img src="r.png" alt="">
             <form id="updateDataForm" action="../Profil-be/dataUpdate.php" method="POST">
                 <th>
                     <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
