@@ -7,18 +7,27 @@ require_once('../../fieldsNames.php');
 $id_etudiant = $_SESSION['id_etudiant'] ?? 1;
 $id_offre = $_POST['id_offre'] ?? null;
 
-echo "ID etudiant: " . $id_etudiant . "<br>";
-echo "ID offre: " . $id_offre . "<br>";
+if ($id_etudiant && $id_offre && is_numeric($id_offre)) {
+    // Check if already in favoris
+    $check = $conn->prepare("SELECT 1 FROM favoris WHERE id_etudiant = ? AND id_offre = ?");
+    $check->bind_param("ii", $id_etudiant, $id_offre);
+    $check->execute();
+    $result = $check->get_result();
 
-if ($id_etudiant && $id_offre) {
-    $query = "INSERT IGNORE INTO favoris (id_etudiant, id_offre) VALUES (?, ?)";
-
-    // Sécurisation contre les injections SQL 
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $id_etudiant, $id_offre);
-    $stmt->execute();
+    if ($result->num_rows > 0) {
+        // Remove
+        $delete = $conn->prepare("DELETE FROM favoris WHERE id_etudiant = ? AND id_offre = ?");
+        $delete->bind_param("ii", $id_etudiant, $id_offre);
+        $delete->execute();
+    } else {
+        // Add
+        $insert = $conn->prepare("INSERT INTO favoris (id_etudiant, id_offre) VALUES (?, ?)");
+        $insert->bind_param("ii", $id_etudiant, $id_offre);
+        $insert->execute();
+    }
 
     header("Location: ../../view/offres.php");
+    exit;
 } else {
     echo "Erreur est survenue lors de la sauvegarde de l'offre.";
     // header("Location: ../../view/offres.php");
