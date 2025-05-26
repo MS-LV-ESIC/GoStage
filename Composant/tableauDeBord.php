@@ -72,7 +72,7 @@ offres.forEach(offre => {
     div.innerHTML = `
         <strong>Entreprise :</strong> ${offre['<?php echo FIELD_NAME;?>']}<br>
         <strong>Titulaire :</strong> ${offre['<?php echo INTITULE;?>']}<br>
-        <strong>Lacalisation :</strong> ${offre['<?php echo LOCALISATION?>']}<br>
+        <strong>Localisation :</strong> ${offre['<?php echo LOCALISATION?>']}<br>
         <a href='../view/homeOffre.php?id=${offre['<?php echo ID_OFFRE?>']}' >Voir la description du poste</a><br>
         <strong>ID :</strong>${offre['<?php echo ID_OFFRE?>']}
         

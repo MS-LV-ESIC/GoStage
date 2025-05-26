@@ -3,6 +3,12 @@ require_once '../db.php';
 require_once("../fieldsNames.php");
 require ('../Composant/header.php');
 
+session_start();
+if (!isset($_SESSION['email']) || $_SESSION['type'] !=='entreprise') {
+    header("Location: connexion.php");
+    exit();
+}
+
 $id = "1"; // Replace with session or GET logic in production
 $query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$id'";
 $result = mysqli_query($conn, $query);

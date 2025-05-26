@@ -1,5 +1,10 @@
+<?php
+require("../Composant/header.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,27 +14,13 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <script src="https://kit.fontawesome.com/5d4f51e2a9.js" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>Connexion</title>
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-            font-family: "Nunito", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: <weight>;
-            font-style: normal;
-        }
-        header {
-            background-color: rgba(0, 76, 170, 1);
-            display: flex;
-            position: sticky;
-            top: 0;
-            justify-content: space-between;
-        }  
-        body{
-            background-image: url(groupe-de-personnes-diverses-ayant-une-reunion-d-affaires.jpg);
+        body {
+            background-image: url(/GoStage/Composant/tableauDeBord-be/images/groupe-de-personnes-diverses-ayant-une-reunion-d-affaires.jpg);
             background-size: cover;
         }
+
         .Container {
             background-color: #000000;
             opacity: 0.77;
@@ -41,18 +32,20 @@
             justify-content: center;
             align-items: center;
         }
+
         .Formulaire {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 1;
         }
+
         .inner-T {
             color: white;
             text-align: center;
             font-size: 30px;
         }
+
         .input-form {
             width: 400px;
             height: 50px;
@@ -62,32 +55,39 @@
             border: none;
             padding-left: 20px;
         }
-        .button{
-            margin-top: 20px;
+
+        .button {
+            margin-top: 10px;
             padding: 5px;
             border-radius: 5px;
         }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
     </style>
 </head>
+
 <body>
-     <header>
-        <div class="header-logo">
-            <img src="Logo_site_stage_-_2-removebg-preview.png" alt="" width="100px">
+    <div class="body">
+        <div class="Container">
+            <form class="Formulaire" action="../login.php" method="POST">
+                <h2 class="inner-T">Connexion</h2>
+                <input type="email" class="input-form" id="email" name="email" required
+                    placeholder="Exemple.mail@gmail.com">
+                <input type="password" class="input-form" id="password" name="password" placeholder="Mot de passe">
+                <?php
+                if (isset($_GET['error']) && $_GET['error'] == 1) {
+                    echo "<p class='error'> Identifiant ou mot de passe incorrectes </p>";
+                }
+                ?>
+                <button type="submit" onclick="" class="button">Log in</button>
+                <a href="" style="margin-top: 10px; color: white;">S'inscrire</a>
+
+            </form>
         </div>
-        <div class="header-icon">
-            <i class="fa-regular fa-bell" style="color: white; font-size: 150%; margin: 40px;"></i>
-            <i class="fa-solid fa-magnifying-glass" style="color:white; font-size: 150%; margin:40px;"></i>
-            <i class="fa-solid fa-user" style="color: #ffffff; font-size: 150%; margin: 40px;"></i>
-        </div>
-    </header>
-    <div class="Container">
-        <form class="Formulaire" action="">
-            <h2 class="inner-T">Connexion</h2>
-            <input type="email" class="input-form" id="email" name="email" required placeholder="Exemple.mail@gmail.com">
-            <input type="password" class="input-form" id="password" name="password" required placeholder="Mot de passe">
-            <button type="submit" class="button">Log in</button>
-            <a href="" style="margin-top: 10px;">S'inscrire</a>
-        </form>
     </div>
 </body>
+
 </html>
