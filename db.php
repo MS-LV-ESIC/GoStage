@@ -2,7 +2,7 @@
     $host = 'localhost';
     $user = 'root';
     $password = '';
-    $db = 'gestionnaire_stage.sql';
+    $db = 'newdatabase';
 
     $conn = mysqli_connect($host, $user, $password, $db);
 

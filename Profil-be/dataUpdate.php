@@ -1,8 +1,8 @@
 <?php
-require_once('../../db.php');
-require_once('../../fieldsNames.php');
+require_once('../db.php');
+require_once('../fieldsNames.php');
 
-$id = '3';
+$id = 1;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fields = [];
@@ -32,12 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = mysqli_query($conn, $query);
 
         if ($result) {
-            header("Location: ../profil.php?success=Modification réussie");
+            header("Location: ../view/profil.php?success=Modification réussie");
             exit();
         }
     } 
 } else {
-    header("Location: ../profil.php?error=BadRequest");
+    header("Location: ../view/profil.php?error=BadRequest");
     exit;
 }
 ?>

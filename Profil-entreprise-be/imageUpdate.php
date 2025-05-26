@@ -1,9 +1,9 @@
 <?php 
-require_once('../../db.php');
-require_once('../../fieldsNames.php');
+require_once('../db.php');
+require_once('../fieldsNames.php');
 
 $imagePath = '';
-$id = 3; // Replace with actual user ID via session or token in production
+$id = 1; // Replace with actual user ID via session or token in production
 
 if (isset($_FILES[FIELD_IMAGE]) && $_FILES[FIELD_IMAGE]['error'] === 0) {
     $targetDir = 'image/';
@@ -20,24 +20,24 @@ if (isset($_FILES[FIELD_IMAGE]) && $_FILES[FIELD_IMAGE]['error'] === 0) {
         // Sanitize file path for DB insertion
         $imagePathSafe = mysqli_real_escape_string($conn, $imagePath);
 
-        $query = "UPDATE " . ETUDIANT . " SET " . FIELD_IMAGE . " = '$imagePathSafe' WHERE " . ID . " = $id";
+        $query = "UPDATE " . ENTREPRISE . " SET " . FIELD_IMAGE . " = '$imagePathSafe' WHERE " . ID_ENTREPRISE . " = $id";
 
         if (mysqli_query($conn, $query)) {
-            header("Location: ../profil.php");
+            header("Location: ../view/profil-entreprise.php");
             exit;
         } else {
             error_log("Erreur SQL : " . mysqli_error($conn));
-            header("Location: ../profil.php");
+            header("Location: ../view/profil-entreprise.php");
             exit;
         }
     } else {
         error_log("Erreur lors du déplacement du fichier.");
-        header("Location: ../profil.php");
+        header("Location: ../view/profil-entreprise.php");
         exit;
     }
 } else {
     error_log("Aucun fichier envoyé ou erreur lors de l'envoi.");
-    header("Location: ../profil.php");
+    header("Location: ../view/profil-entreprise.php");
     exit;
 }
 ?>

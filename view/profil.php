@@ -1,8 +1,9 @@
 <?php
 require_once '../db.php';
 require_once("../fieldsNames.php");
+require ('../Composant/header.php');
 
-$id = "3"; // Replace with session or GET logic in production
+$id = "1"; // Replace with session or GET logic in production
 $query = "SELECT * FROM " . ETUDIANT . " WHERE " . ID . " = '$id'";
 $result = mysqli_query($conn, $query);
 $user = mysqli_fetch_assoc($result);
@@ -15,28 +16,104 @@ $cv = $user[FIELD_CV] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5d4f51e2a9.js" crossorigin="anonymous"></script>
     <title>Profil</title>
     <style>
-        body { background-color:#D9D9D9; }
-        tr { padding: 10px; color: black; display: flex; flex-direction: column; align-items: flex-start; width: 300px; }
-        th { text-align: start; }
-        h1 { padding:10px; }
-        .profil { display:flex; }
-        .photo { display:flex; }
-        .post { display:flex; flex-direction: row; align-items: flex-start; }
-        .aPropos { background-color:white; padding: 10px; }
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Nunito", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: <weight>;
+            font-style: normal;
+        }
+
+
+        body {
+            background-color: #D9D9D9;
+        }
+
+
+        table {}
+
+
+        button {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+
+        tr {
+            /* to change remove the point . */
+            padding: 10px;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 300px;
+            gap: 5px;
+        }
+
+
+        th {
+            text-align: start
+        }
+
+
+        h1 {
+            padding: 10px
+        }
+
+
+        .profil {
+            display: flex;
+        }
+
+
+        .info {
+            width: 38%;
+            margin: 25px;
+            position: fixed;
+        }
+
+
+        .photo {
+            display: flex;
+        }
+
+
+        .post {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+
+        .Offre {
+            background-color: white;
+            width: 58%;
+            padding: 2%;
+            margin-left: 41%;
+            padding-bottom: 60%;
+        }
     </style>
 </head>
 <body>
 
 <div class="profil">
-    <div>
+    <div class="info">
         <div class="photo">
-            <form id="updateImageForm" action="./Back-end/imageUpdate.php" method="POST" enctype="multipart/form-data">
+
+            <form class="uploadPhoto" id="updateImageForm" action="../Profil-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
-                    <img src="<?php echo htmlspecialchars('./Back-end/' . $image); ?>" alt="Photo de profil" width="250" height="250">
-                <?php else : ?>
-                    <img src="Back-end/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
+                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="375" height="350">
+                    <?php else : ?>
+                    <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
                 <?php endif; ?>
                 <input type="file" name="<?php echo FIELD_IMAGE; ?>" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Changer la photo</button>
@@ -44,7 +121,7 @@ $cv = $user[FIELD_CV] ?? '';
 
             <div>
                 <h1>Mon Profil</h1>
-                <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
+                <form id="updateDataForm" action="../Profil-be/dataUpdate.php" method="POST">
                     <table>
                         <thead>
                             <tr>
@@ -80,14 +157,14 @@ $cv = $user[FIELD_CV] ?? '';
                     </table>
                 </form>
 
-                <form id="updateCvForm" action="./Back-end/cvUpdate.php" method="POST" enctype="multipart/form-data">
+                <form id="updateCvForm" action="../Profil-be/cvUpdate.php" method="POST" enctype="multipart/form-data">
                     <?php if (!empty($cv)) : ?> 
                         <p>CV: <?php echo basename($cv); ?></p>
                     <?php endif; ?>
                     <input type="file" name="<?php echo FIELD_CV; ?>" class="form-control mb-2">
                     <button type="submit">Mettre à jour le CV</button>
                     <?php if (!empty($cv)) : ?>
-                        <a href="<?php echo './Back-end/' . htmlspecialchars($cv); ?>" download>
+                        <a href="<?php echo '../Profil-be/' . htmlspecialchars($cv); ?>" download>
                             <button type="button">Télécharger le CV</button>
                         </a>
                     <?php endif; ?>
@@ -95,30 +172,33 @@ $cv = $user[FIELD_CV] ?? '';
             </div>
         </div>
 
-        <h1>Offres sauvegardées</h1>
+        <h1>A propos de moi</h1>
         <div class="post">
-            <img src="r.png" alt="">
-            <div>
-                <h3>Nom entreprise</h3>
-                <p>Nom du poste</p>
-            </div>
+            <form id="updateDataForm" action="../Profil-be/dataUpdate.php" method="POST">
+                <th>
+                    <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
+                        A propos: <span id="<?php echo FIELD_APROPOS; ?>-value"></span>
+                    </span>
+                    <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="10" cols="50"></textarea>
+                    <button type="submit" id="apply-<?php echo FIELD_APROPOS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_APROPOS; ?>')">Appliquer</button>
+                </th>
+            </form>
+        <p id="<?php echo FIELD_APROPOS; ?>-value"></p>
         </div>
     </div>
 
-    <div class="aPropos">
-        <h1>A propos de moi</h1>
-        <form id="updateDataForm" action="./Back-end/dataUpdate.php" method="POST">
-            <th>
-                <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
-                    A propos: <span id="<?php echo FIELD_APROPOS; ?>-value"></span>
-                </span>
-                <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="10" cols="50"></textarea>
-                <button type="submit" id="apply-<?php echo FIELD_APROPOS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_APROPOS; ?>')">Appliquer</button>
-            </th>
-        </form>
-        <p id="<?php echo FIELD_APROPOS; ?>-value"></p>
+    <div class="Offre">
+        <h1>Offre sauvegarder</h1>
+        <?php 
+            require_once("../composant/tableauDeBord.php")
+        ?>
+        <p id="Offre-value"></p>
     </div>
 </div>
+
+<?php
+require('../Composant/footer.php');
+?>
 
 <script>
 document.querySelectorAll('form').forEach(form => {
