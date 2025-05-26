@@ -2,6 +2,12 @@
 require_once '../db.php';
 require_once("../fieldsNames.php");
 require ('../Composant/header.php');
+session_start();
+
+if(!isset($_SESSION['email']) || $_SESSION['type'] !== 'etudiant') {
+    header("Location: connexion.php");
+    exit();
+}
 
 $id = "1"; // Replace with session or GET logic in production
 $query = "SELECT * FROM " . ETUDIANT . " WHERE " . ID . " = '$id'";
@@ -76,7 +82,7 @@ $cv = $user[FIELD_CV] ?? '';
 
 
         .info {
-            width: 38%;
+            width: 45%;
             margin: 25px;
             position: fixed;
         }
@@ -96,9 +102,9 @@ $cv = $user[FIELD_CV] ?? '';
 
         .Offre {
             background-color: white;
-            width: 58%;
+            width: 50%;
             padding: 2%;
-            margin-left: 41%;
+            margin-left: 48%;
             padding-bottom: 60%;
         }
     </style>
@@ -111,7 +117,7 @@ $cv = $user[FIELD_CV] ?? '';
 
             <form class="uploadPhoto" id="updateImageForm" action="../Profil-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
-                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="375" height="350">
+                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="60%" height="75%">
                     <?php else : ?>
                     <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
                 <?php endif; ?>
