@@ -74,7 +74,12 @@ offres.forEach(offre => {
         <strong>Titulaire :</strong> ${offre['<?php echo INTITULE;?>']}<br>
         <strong>Lacalisation :</strong> ${offre['<?php echo LOCALISATION?>']}<br>
         <a href='../view/homeOffre.php?id=${offre['<?php echo ID_OFFRE?>']}' >Voir la description du poste</a><br>
-        <button>Postuler</button>
+        <strong>ID :</strong>${offre['<?php echo ID_OFFRE?>']}
+        
+        <form action='../Composant/tableauDeBord-be/favoris.php' method='POST'>
+            <input type='hidden' name='id_offre' value='${offre["id_offre"]}'>
+            <button type='submit'>mettre en favoris</button>
+        </form>
     `;
     container.appendChild(div);
 });
