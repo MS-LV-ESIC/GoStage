@@ -6,6 +6,8 @@ require_once('../../fieldsNames.php');
 
 $id_etudiant = $_SESSION['id_etudiant'] ?? 1;
 $id_offre = $_POST['id_offre'] ?? null;
+$redir = $_SERVER['HTTP_REFERER'];
+
 
 if ($id_etudiant && $id_offre && is_numeric($id_offre)) {
     // Check if already in favoris
@@ -26,10 +28,11 @@ if ($id_etudiant && $id_offre && is_numeric($id_offre)) {
         $insert->execute();
     }
 
-    header("Location: ../../view/offres.php");
+    header("Location: ". $redir);
     exit;
 } else {
     echo "Erreur est survenue lors de la sauvegarde de l'offre.";
+    echo "id: ",$id_etudiant;
     // header("Location: ../../view/offres.php");
 }
 ?>

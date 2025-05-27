@@ -122,6 +122,7 @@ $image = $user[FIELD_IMAGE] ?? '';
                     >Appliquer</button>
             </th>
         </form>
+        
        
     </div>
 </div>

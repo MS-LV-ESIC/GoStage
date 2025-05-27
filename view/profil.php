@@ -114,7 +114,7 @@ $cv = $user[FIELD_CV] ?? '';
 <div class="profil">
     <div class="info">
         <div class="photo">
-
+<!-- IMAGE -->
             <form class="uploadPhoto" id="updateImageForm" action="../Profil-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
                     <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="60%" height="75%">
@@ -162,7 +162,7 @@ $cv = $user[FIELD_CV] ?? '';
                         </thead>
                     </table>
                 </form>
-
+<!-- CV -->
                 <form id="updateCvForm" action="../Profil-be/cvUpdate.php" method="POST" enctype="multipart/form-data">
                     <?php if (!empty($cv)) : ?> 
                         <p>CV: <?php echo basename($cv); ?></p>
@@ -178,6 +178,7 @@ $cv = $user[FIELD_CV] ?? '';
             </div>
         </div>
 
+<!-- A Propos -->
         <h1>A propos de moi</h1>
         <div class="post">
             <form id="updateDataForm" action="../Profil-be/dataUpdate.php" method="POST">
@@ -185,7 +186,7 @@ $cv = $user[FIELD_CV] ?? '';
                     <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
                         A propos: <span id="<?php echo FIELD_APROPOS; ?>-value"></span>
                     </span>
-                    <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="10" cols="50"></textarea>
+                    <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="3" cols="70"></textarea>
                     <button type="submit" id="apply-<?php echo FIELD_APROPOS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_APROPOS; ?>')">Appliquer</button>
                 </th>
             </form>
@@ -196,7 +197,8 @@ $cv = $user[FIELD_CV] ?? '';
     <div class="Offre">
         <h1>Offre sauvegarder</h1>
         <?php 
-            require_once("../composant/tableauDeBord.php")
+            $component_mode = 'etudiant';
+            include("../composant/tableauDeBord.php")
         ?>
         <p id="Offre-value"></p>
     </div>

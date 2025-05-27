@@ -15,7 +15,8 @@ require_once("../fieldsNames.php");
 <body>
     <?php 
     require_once("../composant/header.php");
-    require_once("../composant/tableauDeBord.php");
+    $component_mode = 'main';
+    include "../composant/tableauDeBord.php";
     require_once("../composant/footer.php")
     
     ?>
