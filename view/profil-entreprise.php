@@ -1,38 +1,30 @@
 <?php
 require_once '../db.php';
 require_once("../fieldsNames.php");
-require ('../Composant/header.php');
+require_once('../Composant/header.php');
 
 session_start();
 
-// Vérifie la session
 if (!isset($_SESSION['email']) || $_SESSION['type'] !== 'entreprise') {
     header("Location: connexion.php");
     exit();
 }
 
-$email = $_SESSION['email'];
+// ✅ Get dynamic entreprise ID
+$idEntreprise = include('../Composant/getId-update-entreprise.php');
 
-$sqlId = "SELECT id_entreprise FROM entreprises WHERE mail = '$email'";
-$resultId = mysqli_query($conn, $sqlId);
+// ✅ Fetch entreprise details
+$query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$idEntreprise'";
+$result = mysqli_query($conn, $query);
 
-if ($row = mysqli_fetch_assoc($resultId)) {
-    $idEntreprise = $row['id_entreprise'];
-
-    // 2. Récupérer les infos de l'entreprise
-    $query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$idEntreprise'";
-    $result = mysqli_query($conn, $query);
-    if (!$result) {
-        die("Erreur SQL lors de la récupération des données de l'entreprise : " . mysqli_error($conn));
-    }
-
-    $user = mysqli_fetch_assoc($result);
-    $image = $user[FIELD_IMAGE] ?? '';
-} else {
-    die("Aucune entreprise trouvée avec cet email.");
+if (!$result) {
+    die("Erreur SQL : " . mysqli_error($conn));
 }
 
+$user = mysqli_fetch_assoc($result);
+$image = $user[FIELD_IMAGE] ?? '';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,6 +41,11 @@ if ($row = mysqli_fetch_assoc($resultId)) {
         .uploadPhoto{display:flex; flex-direction:column}
         .post { display:flex; flex-direction: row; align-items: flex-start; }
         .aPropos { background-color:white; padding: 10px; }
+                .post {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
     </style>
 </head>
 <body>
@@ -69,7 +66,7 @@ if ($row = mysqli_fetch_assoc($resultId)) {
             </form>
 
             <div>
-                <h1>Mon Profil</h1>
+                <h1>Profil</h1>
                 <!-- updateDataForm Permet de modifier la les information sur l'entreprise -->
                 <form id="updateDataForm" action="../Profil-entreprise-be/dataUpdate.php" method="POST">
                     <table>
@@ -107,11 +104,22 @@ if ($row = mysqli_fetch_assoc($resultId)) {
                     </table>
                 </form>
             </div>
+
+            <div class="aPropos">
+        <div class="Offre">
+        <h1>Nos Offres</h1>
+            <?php 
+                $id_entreprise = include('../Composant/getId-update-entreprise.php');
+                $component_mode = 'entreprise';
+                include("../composant/tableauDeBord.php");
+            ?>
+            <p id="Offre-value"></p>
         </div>
+       
     </div>
 
-    <div class="aPropos">
-        <h1>A propos de l'entreprise :</h1>
+        </div>
+        <h1>A propos de moi</h1>
         <form 
             id="updateDataForm" 
             action="../Profil-entreprise-be/dataUpdate.php" 
@@ -139,9 +147,10 @@ if ($row = mysqli_fetch_assoc($resultId)) {
                     >Appliquer</button>
             </th>
         </form>
-        
-       
     </div>
+    </div>
+
+    
 </div>
 
 <script>

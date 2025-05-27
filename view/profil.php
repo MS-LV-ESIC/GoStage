@@ -1,36 +1,28 @@
 <?php
 require_once '../db.php';
 require_once("../fieldsNames.php");
-require ('../Composant/header.php');
+require_once('../Composant/header.php');
 session_start();
 
-if(!isset($_SESSION['email']) || $_SESSION['type'] !== 'etudiant') {
+if (!isset($_SESSION['email']) || $_SESSION['type'] !== 'etudiant') {
     header("Location: connexion.php");
     exit();
 }
-$email = $_SESSION['email'];
-$email = mysqli_real_escape_string($conn, $email);  // protège contre injections
 
-// Requête pour trouver l'ID de l'étudiant
-$sqlId = "SELECT id_etudiant FROM etudiants WHERE mail = '$email'";
-$resultId = mysqli_query($conn, $sqlId);
+// ✅ Get the dynamic student ID from component
+$id_etudiant = include('../Composant/getId-update-etudiant.php');
 
-if (!$resultId) {
+// ✅ Now get student info
+$query = "SELECT * FROM etudiants WHERE id_etudiant = '$id_etudiant'";
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
     die("Erreur SQL : " . mysqli_error($conn));
 }
 
-if ($row = mysqli_fetch_assoc($resultId)) {
-    $idEtudiant = $row['id_etudiant'];
-
-    // Récupérer les infos du profil
-    $query = "SELECT * FROM etudiants WHERE id_etudiant = '$idEtudiant'";
-    $result = mysqli_query($conn, $query);
-    $user = mysqli_fetch_assoc($result);
-    $image = $user[FIELD_IMAGE] ?? '';
-    $cv = $user[FIELD_CV] ?? '';
-} else {
-    die("Aucun étudiant trouvé avec cet email.");
-}
+$user = mysqli_fetch_assoc($result);
+$image = $user[FIELD_IMAGE] ?? '';
+$cv = $user[FIELD_CV] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -92,6 +84,20 @@ if ($row = mysqli_fetch_assoc($resultId)) {
         }
 
 
+        #updateImageForm .form-control {
+            background-color: var(--bs-body-bg, #fff);
+            color: var(--bs-body-color, #212529);
+            border: var(--bs-border-width, 1px) solid var(--bs-border-color, #dee2e6);
+            border-radius: var(--bs-border-radius, 0.375rem);
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            max-width: 220px
+        }
+        .uploadPhoto{
+            margin-right:16px;
+        }
+
         .profil {
             display: flex;
         }
@@ -133,7 +139,7 @@ if ($row = mysqli_fetch_assoc($resultId)) {
 <!-- IMAGE -->
             <form class="uploadPhoto" id="updateImageForm" action="../Profil-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
-                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="60%" height="75%">
+                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil">
                     <?php else : ?>
                     <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
                 <?php endif; ?>
@@ -213,7 +219,9 @@ if ($row = mysqli_fetch_assoc($resultId)) {
     <div class="Offre">
         <h1>Offre sauvegarder</h1>
         <?php 
+            $id_etudiant = include('../Composant/getId-update-etudiant.php');
             $component_mode = 'etudiant';
+            $showOnlyFavorites = true;
             include("../composant/tableauDeBord.php")
         ?>
         <p id="Offre-value"></p>

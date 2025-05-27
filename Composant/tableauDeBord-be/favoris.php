@@ -4,7 +4,16 @@ session_start();
 require_once('../../db.php');
 require_once('../../fieldsNames.php');
 
-$id_etudiant = $_SESSION['id_etudiant'] ?? 1;
+if (!isset($_SESSION['id_etudiant'])) {
+    // no logged in student ID found, redirect to login or show error
+    header("Location: ../../view/connexion.php");
+    exit();
+}
+$id_etudiant = $_SESSION['id_etudiant'] ?? null;
+if (!$id_etudiant) {
+    echo "Erreur : aucun étudiant connecté.";
+    exit();
+}
 $id_offre = $_POST['id_offre'] ?? null;
 $redir = $_SERVER['HTTP_REFERER'];
 
