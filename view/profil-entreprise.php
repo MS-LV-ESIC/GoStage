@@ -4,18 +4,35 @@ require_once("../fieldsNames.php");
 require ('../Composant/header.php');
 
 session_start();
-if (!isset($_SESSION['email']) || $_SESSION['type'] !=='entreprise') {
+
+// Vérifie la session
+if (!isset($_SESSION['email']) || $_SESSION['type'] !== 'entreprise') {
     header("Location: connexion.php");
     exit();
 }
 
-$id = "1"; // Replace with session or GET logic in production
-$query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$id'";
-$result = mysqli_query($conn, $query);
-$user = mysqli_fetch_assoc($result);
-$image = $user[FIELD_IMAGE] ?? '';
-?>
+$email = $_SESSION['email'];
 
+$sqlId = "SELECT id_entreprise FROM entreprises WHERE mail = '$email'";
+$resultId = mysqli_query($conn, $sqlId);
+
+if ($row = mysqli_fetch_assoc($resultId)) {
+    $idEntreprise = $row['id_entreprise'];
+
+    // 2. Récupérer les infos de l'entreprise
+    $query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$idEntreprise'";
+    $result = mysqli_query($conn, $query);
+    if (!$result) {
+        die("Erreur SQL lors de la récupération des données de l'entreprise : " . mysqli_error($conn));
+    }
+
+    $user = mysqli_fetch_assoc($result);
+    $image = $user[FIELD_IMAGE] ?? '';
+} else {
+    die("Aucune entreprise trouvée avec cet email.");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

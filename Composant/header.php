@@ -96,8 +96,8 @@
             <div class="dropdown">
                 <button class="dropbtn"><i class="fa-solid fa-user"></i></button>
                 <div class="dropdown-content">
-                    <a href="profil.php">Profil</a>
-                    <a href="logout.php">Déconnexion</a>
+                    <a href="../Logs-be/profil-be">Profil</a>
+                    <a href="../Logs-be/logout.php">Déconnexion</a>
                 </div>
             </div>
         </div>
