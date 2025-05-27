@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -98,17 +98,44 @@ if($profileEtudiant){
 
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offre</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5d4f51e2a9.js" crossorigin="anonymous"></script>
+</head>
+
 <body>
     <style>
-        .offres{
-            display:flex;
-            
+        body {
+            margin: 0;
+            font-family: "Nunito", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: weight;
+            font-style: normal;
+        }
+
+        h1 {
+            padding: 40px;
+            text-align: center;
+            background-image: url('https://img.freepik.com/vecteurs-libre/cercle-abstrait-affaires-bleu_1182-678.jpg?semt=ais_hybrid&w=740');
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: white;
+            font-size: 500%;
         }
     </style>
 
-        <h2>Liste des Offres</h2>
-        <div id="offres-container"></div>
-
+    <h1>Offre</h1>
+    <div id="offres-container">
+    </div>
 
 
 <script>
@@ -154,12 +181,17 @@ offres.forEach(offre => {
             <input type='hidden' name='id_offre' value='${offerId}'>
             <button type='submit'>${buttonLabel}</button>
         </form>
-    </div>
+        <div button class="btn apply-button" style="background-color: rgba(0, 76, 170, 1);color: white;padding: 8px 16px;border: none;border-radius: 20px;cursor: pointer;margin-bottom: 5px;">Postuler</button></div>
+        <div style="font-size: 12px;color: #555;text-decoration: underline;margin: 10px"><a href='../view/homeOffre.php?id=${offre['<?php echo ID_OFFRE ?>']}' >Voir la description du poste</a><br></div>
+        </div>
+        </div>
     `;
-
-    container.appendChild(div);
-});
-</script>
-
+            container.appendChild(div);
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
