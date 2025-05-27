@@ -1,8 +1,7 @@
 <?php
 require_once('../db.php');
 require_once('../fieldsNames.php');
-
-$id = 1;
+require_once('../Composant/getId-update-etudiant.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fields = [];

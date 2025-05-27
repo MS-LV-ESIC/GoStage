@@ -8,13 +8,29 @@ if(!isset($_SESSION['email']) || $_SESSION['type'] !== 'etudiant') {
     header("Location: connexion.php");
     exit();
 }
+$email = $_SESSION['email'];
+$email = mysqli_real_escape_string($conn, $email);  // protège contre injections
 
-$id = "1"; // Replace with session or GET logic in production
-$query = "SELECT * FROM " . ETUDIANT . " WHERE " . ID . " = '$id'";
-$result = mysqli_query($conn, $query);
-$user = mysqli_fetch_assoc($result);
-$image = $user[FIELD_IMAGE] ?? '';
-$cv = $user[FIELD_CV] ?? '';
+// Requête pour trouver l'ID de l'étudiant
+$sqlId = "SELECT id_etudiant FROM etudiants WHERE mail = '$email'";
+$resultId = mysqli_query($conn, $sqlId);
+
+if (!$resultId) {
+    die("Erreur SQL : " . mysqli_error($conn));
+}
+
+if ($row = mysqli_fetch_assoc($resultId)) {
+    $idEtudiant = $row['id_etudiant'];
+
+    // Récupérer les infos du profil
+    $query = "SELECT * FROM etudiants WHERE id_etudiant = '$idEtudiant'";
+    $result = mysqli_query($conn, $query);
+    $user = mysqli_fetch_assoc($result);
+    $image = $user[FIELD_IMAGE] ?? '';
+    $cv = $user[FIELD_CV] ?? '';
+} else {
+    die("Aucun étudiant trouvé avec cet email.");
+}
 ?>
 
 <!DOCTYPE html>
@@ -185,7 +201,7 @@ $cv = $user[FIELD_CV] ?? '';
                     <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
                         A propos: <span id="<?php echo FIELD_APROPOS; ?>-value"></span>
                     </span>
-                    <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="10" cols="50"></textarea>
+                    <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="5" cols="50"></textarea>
                     <button type="submit" id="apply-<?php echo FIELD_APROPOS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_APROPOS; ?>')">Appliquer</button>
                 </th>
             </form>
