@@ -36,6 +36,7 @@ if ($_SESSION['type'] === 'etudiant') {
     body {
         margin: 0;
         font-family: 'Nunito', sans-serif;
+        margin-top: 500px;
     }
 
     .offre-title {
@@ -48,6 +49,9 @@ if ($_SESSION['type'] === 'etudiant') {
         font-size: 4rem;
         font-weight: 700;
         margin-bottom: 30px;
+    }
+    .div{
+        margin-top: 1900px;
     }
 </style>
 
@@ -62,6 +66,12 @@ require_once("../composant/header.php");
 <?php
 // ✅ Pass the correct mode and ID to the component
 include("../composant/tableauDeBord.php");
+
+
+?>
+<div class="div"></div>
+<?php
+
 
 require_once("../composant/footer.php");
 ?>

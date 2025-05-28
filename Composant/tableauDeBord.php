@@ -126,7 +126,7 @@ if($profileEtudiant && isset($id_etudiant)){
             border: 1px solid #ddd;
             border-radius: 10px;
             padding: 20px;
-            width: 700px;
+            width: 650px;
             height: 140px;
             box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
             display: flex;

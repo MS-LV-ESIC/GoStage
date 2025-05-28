@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } else {
             $error = mysqli_error($conn);
-            header("Location: ../view/profil-entreprise.php?success=Modification réussie");
+            header("Location: ../view/profil-entreprise.php?success=Modification non reussi");
             exit();
         }
     } 

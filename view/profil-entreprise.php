@@ -47,6 +47,10 @@ $image = $user[FIELD_IMAGE] ?? '';
             flex-direction: row;
             align-items: flex-start;
         }
+        .AjouteOffre{
+
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
@@ -66,9 +70,7 @@ $image = $user[FIELD_IMAGE] ?? '';
                 <button type="submit" class="btn btn-primary">Changer la photo</button>
             </form>
 
-            <form class="offre" action="ajoutOffres.php" method="post">
-                    <button type="submit" class="btn btn-primary">Ajouter une offre</button>
-                </form>
+
 
             <div>
                 <h1>Profil</h1>
@@ -111,48 +113,56 @@ $image = $user[FIELD_IMAGE] ?? '';
             </div>
 
             <div class="aPropos">
-        <div class="Offre">
-        <h1>Nos Offres</h1>
-            <?php 
-                $id_entreprise = include('../Composant/getId-update-entreprise.php');
-                $component_mode = 'entreprise';
-                include("../composant/tableauDeBord.php");
-            ?>
-            <p id="Offre-value"></p>
-        </div>
+                <div class="Offre">
+                    <h1>Nos Offres</h1>
+                    <form class="AjouteOffre" action="ajoutOffres.php" method="post">
+                            <button type="submit" class="btn btn-primary">Ajouter une offre</button>
+                    </form>
+                    <?php 
+                        $id_entreprise = include('../Composant/getId-update-entreprise.php');
+                        $component_mode = 'entreprise';
+                        include("../composant/tableauDeBord.php");
+                    ?>
+                    <p id="Offre-value"></p>
+                </div>
        
-    </div>
+            </div>
 
         </div>
-        <h1>A propos de moi</h1>
-        <form 
-            id="updateDataForm" 
-            action="../Profil-entreprise-be/dataUpdate.php" 
-            method="POST">
-            <th>
-                <span 
-                    id="label-<?php echo FIELD_APROPOS_ENTREPRISE; ?>" 
-                    onclick="showInput('<?php echo FIELD_APROPOS_ENTREPRISE; ?>')">
-                    <span id="<?php echo FIELD_APROPOS_ENTREPRISE; ?>-value"></span>
-                </span>
-                <textarea 
-                    name="<?php echo FIELD_APROPOS_ENTREPRISE; ?>" 
-                    id="<?php echo FIELD_APROPOS_ENTREPRISE; ?>" 
-                    style="display:none;" 
-                    disabled 
-                    maxlength="500" 
-                    rows="3" 
-                    cols="80"
-                    ></textarea>
-                <button 
-                    type="submit" 
-                    id="apply-<?php echo FIELD_APROPOS_ENTREPRISE; ?>" 
-                    style="display:none;" 
-                    onclick="applyInput('<?php echo FIELD_APROPOS_ENTREPRISE; ?>')"
-                    >Appliquer</button>
-            </th>
-        </form>
-    </div>
+
+            <div>
+
+                <h1>A propos de Nous</h1>
+                <form 
+                    id="updateDataForm" 
+                    action="../Profil-entreprise-be/dataUpdate.php" 
+                    method="POST">
+                    <th>
+                        <span 
+                            id="label-<?php echo FIELD_APROPOS_ENTREPRISE; ?>" 
+                            onclick="showInput('<?php echo FIELD_APROPOS_ENTREPRISE; ?>')">
+                            <span id="<?php echo FIELD_APROPOS_ENTREPRISE; ?>-value"></span>
+                        </span>
+                        <textarea 
+                            name="<?php echo FIELD_APROPOS_ENTREPRISE; ?>" 
+                            id="<?php echo FIELD_APROPOS_ENTREPRISE; ?>" 
+                            style="display:none;" 
+                            disabled 
+                            maxlength="500" 
+                            rows="3" 
+                            cols="80"
+                            ></textarea>
+                        <button 
+                            type="submit" 
+                            id="apply-<?php echo FIELD_APROPOS_ENTREPRISE; ?>" 
+                            style="display:none;" 
+                            onclick="applyInput('<?php echo FIELD_APROPOS_ENTREPRISE; ?>')"
+                            >Appliquer</button>
+                    </th>
+                </form>
+            </div>
+    
+        </div>
     </div>
 
     
@@ -191,7 +201,7 @@ let user = <?php echo json_encode($user); ?>;
 
 document.getElementById('<?php echo FIELD_NAME; ?>-value').textContent = user["<?php echo FIELD_NAME; ?>"];
 document.getElementById('email-value').textContent = user["<?php echo FIELD_EMAIL; ?>"];
-document.getElementById('<?php echo FIELD_APROPOS_ENTREPRISE; ?>-value').textContent = user["<?php echo FIELD_APROPOS_ENTREPRISE; ?>"];
+document.getElementById('<?php echo FIELD_APROPOS_ENTREPRISE; ?>-value').textContent = user["<?php echo FIELD_APROPOS_ENTREPRISE; ?>"] || "Cliquez ici pour ajouter une description...";
 
 function showInput(field) {
     document.getElementById('label-' + field).style.display = 'none';
@@ -213,8 +223,10 @@ function applyInput(field) {
 }
 
 </script>
+
+</body>
+
+</html>
 <?php
 require_once ('../Composant/footer.php')
 ?>
-</body>
-</html>
