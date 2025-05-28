@@ -62,12 +62,12 @@
 
             <div class="form shadow" style="min-width: 350px; max-width: 400px; width: 100%; background: rgba(255, 255, 255, 0.774); padding: 30px; border-radius: 3%;">
                 <h3 class="text-center" style="color: rgba(0, 76, 170, 1);" ><strong>Inscription entreprise</strong></h3><br>
-                <form action="register.php" method="POST">
+                <form action="../backInscription.php" method="POST">
                     <div class="mb-3">
-                        <input type="text" name="nom" id="nom" class="form-control" placeholder="Nom">
+                        <input type="text" name="nom" id="nom" class="form-control" placeholder="nom">
                     </div>
                     <div class="mb-3">
-                        <input type="email" name="email" id="email" class="form-control" placeholder="Email@gmail.com">
+                        <input type="mail" name="mail" id="mail" class="form-control" placeholder="mail@gmail.com">
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" name="password" id="password" class="form-control"
