@@ -18,9 +18,9 @@ define('FIELD_APROPOS_ENTREPRISE', 'description');
 
 define('OFFRES', 'offres');
 define('ID_OFFRE', 'id_offre');
-define('INTITULE','intitule');
+define('FIELD_INTITULE','intitule');
+define('FIELD_RENUMERATION','renumeration');
 define('FIELD_APROPOS_OFFRE', 'description');
-define('RENUMERATION','renumeration');
-define("LOCALISATION", "localisation")
+define("FIELD_LIEU", 'id_adresse');
 
 ?>

@@ -1,0 +1,74 @@
+<?php
+require_once '../db.php';
+require_once('../fieldsNames.php');
+require_once('../Composant/header.php');
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <script src="https://kit.fontawesome.com/5d4f51e2a9.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <style>
+        * {
+            font-family: "Nunito", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: weight;
+            font-style: normal;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("gros-plan-de-femme-affaires-dactylographie-sur-ordinateur-portable-sur-bureau.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            /* règle ici l’opacité de l’image */
+            z-index: -1;
+        }
+
+        body .paragraphe {
+            text-align: center;
+            margin: 20px;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+    </style>
+    <div class="paragraphe">
+        <h1><strong>Tu cherches un stage qui a du sens ?</strong></h1><br>
+        <h5>Avec notre application GoStage, tu peux trouver toutes les opportunités et les aménager avec une simplicité
+        </h5>
+    </div>
+    <form role="search" method="GET" action="research.php">
+
+        <input class="form-control me-2 w-50 bg-body-primary" style="margin-left: 25%;" type="search" id="site-search"
+            placeholder="type your search" name="research" aria-label="search" required>
+        <button class="btn" type="submit"
+            style="color: white; background-color: grey;  margin-top: 5%; position: center;">Recherche</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
