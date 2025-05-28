@@ -17,7 +17,7 @@ require("../Composant/header.php");
     <title>Connexion</title>
     <style>
         body {
-            background-image: url(/GoStage/Composant/tableauDeBord-be/images/groupe-de-personnes-diverses-ayant-une-reunion-d-affaires.jpg);
+            background-image: url(/GoStage/view/images/groupe-de-personnes-diverses-ayant-une-reunion-d-affaires.jpg);
             background-size: cover;
         }
 
