@@ -139,9 +139,9 @@ $cv = $user[FIELD_CV] ?? '';
 <!-- IMAGE -->
             <form class="uploadPhoto" id="updateImageForm" action="../Profil-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
-                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil">
+                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="220" height="220">
                     <?php else : ?>
-                    <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
+                    <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="220" height="220">
                 <?php endif; ?>
                 <input type="file" name="<?php echo FIELD_IMAGE; ?>" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Changer la photo</button>
