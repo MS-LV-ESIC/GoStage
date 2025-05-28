@@ -9,6 +9,6 @@ if ($_SESSION['type'] === 'etudiant') {
     header('Location: ../view/profil-entreprise.php');
     exit();
 } else {
-    echo "Type d'utilisateur inconnu.";
+    header('Location: ../view/profil-entreprise.php');
 }
 ?>

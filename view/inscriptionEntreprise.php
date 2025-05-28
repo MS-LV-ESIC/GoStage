@@ -36,7 +36,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("groupe-de-personnes-diverses-ayant-une-reunion-d-affaires.jpg");
+            background-image: url("./images/groupe-de-personnes-diverses-ayant-une-reunion-d-affaires.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
