@@ -3,7 +3,7 @@ require_once('../db.php');
 require_once('../fieldsNames.php');
 
 $imagePath = '';
-$id = 1; // Replace with actual user ID via session or token in production
+require_once('../Composant/getId-update-entreprise.php');
 
 if (isset($_FILES[FIELD_IMAGE]) && $_FILES[FIELD_IMAGE]['error'] === 0) {
     $targetDir = 'image/';

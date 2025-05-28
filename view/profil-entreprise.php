@@ -1,17 +1,26 @@
 <?php
 require_once '../db.php';
 require_once("../fieldsNames.php");
-require ('../Composant/header.php');
+require_once('../Composant/header.php');
 
 session_start();
-if (!isset($_SESSION['email']) || $_SESSION['type'] !=='entreprise') {
+
+if (!isset($_SESSION['email']) || $_SESSION['type'] !== 'entreprise') {
     header("Location: connexion.php");
     exit();
 }
 
-$id = "1"; // Replace with session or GET logic in production
-$query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$id'";
+// ✅ Get dynamic entreprise ID
+$idEntreprise = include('../Composant/getId-update-entreprise.php');
+
+// ✅ Fetch entreprise details
+$query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$idEntreprise'";
 $result = mysqli_query($conn, $query);
+
+if (!$result) {
+    die("Erreur SQL : " . mysqli_error($conn));
+}
+
 $user = mysqli_fetch_assoc($result);
 $image = $user[FIELD_IMAGE] ?? '';
 ?>
@@ -32,6 +41,11 @@ $image = $user[FIELD_IMAGE] ?? '';
         .uploadPhoto{display:flex; flex-direction:column}
         .post { display:flex; flex-direction: row; align-items: flex-start; }
         .aPropos { background-color:white; padding: 10px; }
+                .post {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +66,7 @@ $image = $user[FIELD_IMAGE] ?? '';
             </form>
 
             <div>
-                <h1>Mon Profil</h1>
+                <h1>Profil</h1>
                 <!-- updateDataForm Permet de modifier la les information sur l'entreprise -->
                 <form id="updateDataForm" action="../Profil-entreprise-be/dataUpdate.php" method="POST">
                     <table>
@@ -90,11 +104,22 @@ $image = $user[FIELD_IMAGE] ?? '';
                     </table>
                 </form>
             </div>
+
+            <div class="aPropos">
+        <div class="Offre">
+        <h1>Nos Offres</h1>
+            <?php 
+                $id_entreprise = include('../Composant/getId-update-entreprise.php');
+                $component_mode = 'entreprise';
+                include("../composant/tableauDeBord.php");
+            ?>
+            <p id="Offre-value"></p>
         </div>
+       
     </div>
 
-    <div class="aPropos">
-        <h1>A propos de l'entreprise :</h1>
+        </div>
+        <h1>A propos de moi</h1>
         <form 
             id="updateDataForm" 
             action="../Profil-entreprise-be/dataUpdate.php" 
@@ -111,8 +136,8 @@ $image = $user[FIELD_IMAGE] ?? '';
                     style="display:none;" 
                     disabled 
                     maxlength="500" 
-                    rows="10" 
-                    cols="50"
+                    rows="3" 
+                    cols="80"
                     ></textarea>
                 <button 
                     type="submit" 
@@ -122,8 +147,10 @@ $image = $user[FIELD_IMAGE] ?? '';
                     >Appliquer</button>
             </th>
         </form>
-       
     </div>
+    </div>
+
+    
 </div>
 
 <script>
@@ -179,7 +206,10 @@ function applyInput(field) {
     document.getElementById('apply-' + field).style.display = 'none';
     document.getElementById('label-' + field).style.display = 'inline';
 }
-</script>
 
+</script>
+<?php
+require_once ('../Composant/footer.php')
+?>
 </body>
 </html>

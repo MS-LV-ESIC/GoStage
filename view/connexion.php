@@ -17,7 +17,7 @@ require("../Composant/header.php");
     <title>Connexion</title>
     <style>
         body {
-            background-image: url(/GoStage/Composant/tableauDeBord-be/images/groupe-de-personnes-diverses-ayant-une-reunion-d-affaires.jpg);
+            background-image: url(/GoStage/view/images/groupe-de-personnes-diverses-ayant-une-reunion-d-affaires.jpg);
             background-size: cover;
         }
 
@@ -72,7 +72,7 @@ require("../Composant/header.php");
 <body>
     <div class="body">
         <div class="Container">
-            <form class="Formulaire" action="../login.php" method="POST">
+            <form class="Formulaire" action="../Logs-be/login.php" method="POST">
                 <h2 class="inner-T">Connexion</h2>
                 <input type="email" class="input-form" id="email" name="email" required
                     placeholder="Exemple.mail@gmail.com">
@@ -82,8 +82,15 @@ require("../Composant/header.php");
                     echo "<p class='error'> Identifiant ou mot de passe incorrectes </p>";
                 }
                 ?>
-                <button type="submit" onclick="" class="button">Log in</button>
-                <a href="" style="margin-top: 10px; color: white;">S'inscrire</a>
+                <button type="submit" class="button">Log in</button>
+                <button type="button" onclick="location.href='inscription'" class="btn w-100 mt-1"
+                        style="color: white;">
+                        Inscription?</button>
+                <button type="button" onclick="location.href='inscriptionEntreprise'" class="btn w-100 mt-1"
+                        style="color: white;">
+                        Inscription entreprise?</button>
+
+
 
             </form>
         </div>

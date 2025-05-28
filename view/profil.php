@@ -1,17 +1,25 @@
 <?php
 require_once '../db.php';
 require_once("../fieldsNames.php");
-require ('../Composant/header.php');
+require_once('../Composant/header.php');
 session_start();
 
-if(!isset($_SESSION['email']) || $_SESSION['type'] !== 'etudiant') {
+if (!isset($_SESSION['email']) || $_SESSION['type'] !== 'etudiant') {
     header("Location: connexion.php");
     exit();
 }
 
-$id = "1"; // Replace with session or GET logic in production
-$query = "SELECT * FROM " . ETUDIANT . " WHERE " . ID . " = '$id'";
+// ✅ Get the dynamic student ID from component
+$id_etudiant = include('../Composant/getId-update-etudiant.php');
+
+// ✅ Now get student info
+$query = "SELECT * FROM etudiants WHERE id_etudiant = '$id_etudiant'";
 $result = mysqli_query($conn, $query);
+
+if (!$result) {
+    die("Erreur SQL : " . mysqli_error($conn));
+}
+
 $user = mysqli_fetch_assoc($result);
 $image = $user[FIELD_IMAGE] ?? '';
 $cv = $user[FIELD_CV] ?? '';
@@ -76,6 +84,20 @@ $cv = $user[FIELD_CV] ?? '';
         }
 
 
+        #updateImageForm .form-control {
+            background-color: var(--bs-body-bg, #fff);
+            color: var(--bs-body-color, #212529);
+            border: var(--bs-border-width, 1px) solid var(--bs-border-color, #dee2e6);
+            border-radius: var(--bs-border-radius, 0.375rem);
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            max-width: 220px
+        }
+        .uploadPhoto{
+            margin-right:16px;
+        }
+
         .profil {
             display: flex;
         }
@@ -114,12 +136,12 @@ $cv = $user[FIELD_CV] ?? '';
 <div class="profil">
     <div class="info">
         <div class="photo">
-
+<!-- IMAGE -->
             <form class="uploadPhoto" id="updateImageForm" action="../Profil-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
-                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="60%" height="75%">
+                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="220" height="220">
                     <?php else : ?>
-                    <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="250" height="250">
+                    <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="220" height="220">
                 <?php endif; ?>
                 <input type="file" name="<?php echo FIELD_IMAGE; ?>" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Changer la photo</button>
@@ -162,7 +184,7 @@ $cv = $user[FIELD_CV] ?? '';
                         </thead>
                     </table>
                 </form>
-
+<!-- CV -->
                 <form id="updateCvForm" action="../Profil-be/cvUpdate.php" method="POST" enctype="multipart/form-data">
                     <?php if (!empty($cv)) : ?> 
                         <p>CV: <?php echo basename($cv); ?></p>
@@ -178,6 +200,7 @@ $cv = $user[FIELD_CV] ?? '';
             </div>
         </div>
 
+<!-- A Propos -->
         <h1>A propos de moi</h1>
         <div class="post">
             <form id="updateDataForm" action="../Profil-be/dataUpdate.php" method="POST">
@@ -185,7 +208,7 @@ $cv = $user[FIELD_CV] ?? '';
                     <span id="label-<?php echo FIELD_APROPOS; ?>" onclick="showInput('<?php echo FIELD_APROPOS; ?>')">
                         A propos: <span id="<?php echo FIELD_APROPOS; ?>-value"></span>
                     </span>
-                    <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="10" cols="50"></textarea>
+                    <textarea name="<?php echo FIELD_APROPOS; ?>" id="<?php echo FIELD_APROPOS; ?>" style="display:none;" disabled maxlength="500" rows="5" cols="50"></textarea>
                     <button type="submit" id="apply-<?php echo FIELD_APROPOS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_APROPOS; ?>')">Appliquer</button>
                 </th>
             </form>
@@ -196,7 +219,10 @@ $cv = $user[FIELD_CV] ?? '';
     <div class="Offre">
         <h1>Offre sauvegarder</h1>
         <?php 
-            require_once("../composant/tableauDeBord.php")
+            $id_etudiant = include('../Composant/getId-update-etudiant.php');
+            $component_mode = 'etudiant';
+            $showOnlyFavorites = true;
+            include("../composant/tableauDeBord.php")
         ?>
         <p id="Offre-value"></p>
     </div>

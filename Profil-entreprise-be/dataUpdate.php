@@ -2,7 +2,7 @@
 require_once('../db.php');
 require_once('../fieldsNames.php');
 $logFile = __DIR__ . '/execution_log.txt';
-$id = '1';
+require_once('../Composant/getId-update-entreprise.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fields = [];
