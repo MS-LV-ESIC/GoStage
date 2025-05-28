@@ -7,7 +7,6 @@
 <body>
     <style>
      footer{
-        position: fixed;
         bottom: 0;
         width: 100%;
         background-color: rgba(0, 76, 170, 1);

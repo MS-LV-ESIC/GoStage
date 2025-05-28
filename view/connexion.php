@@ -83,7 +83,14 @@ require("../Composant/header.php");
                 }
                 ?>
                 <button type="submit" class="button">Log in</button>
-                <a href="" style="margin-top: 10px; color: white;">S'inscrire</a>
+                <button type="button" onclick="location.href='inscription'" class="btn w-100 mt-1"
+                        style="color: white;">
+                        Inscription?</button>
+                <button type="button" onclick="location.href='inscriptionEntreprise'" class="btn w-100 mt-1"
+                        style="color: white;">
+                        Inscription entreprise?</button>
+
+
 
             </form>
         </div>

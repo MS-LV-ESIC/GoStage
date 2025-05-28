@@ -141,8 +141,8 @@ $image = $user[FIELD_IMAGE] ?? '';
                     style="display:none;" 
                     disabled 
                     maxlength="500" 
-                    rows="10" 
-                    cols="50"
+                    rows="3" 
+                    cols="80"
                     ></textarea>
                 <button 
                     type="submit" 
@@ -211,7 +211,10 @@ function applyInput(field) {
     document.getElementById('apply-' + field).style.display = 'none';
     document.getElementById('label-' + field).style.display = 'inline';
 }
-</script>
 
+</script>
+<?php
+require_once ('../Composant/footer.php')
+?>
 </body>
 </html>
