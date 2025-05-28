@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once("../db.php");
 require_once("../fieldsNames.php");
 
@@ -101,9 +101,10 @@ require('../Composant/header.php');
     <div class="offre-container">
         <div class="title d-flex align-items-center">
             <?php if (!empty($image)): ?>
-                <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="100" height="100">
+                <img src="<?php echo htmlspecialchars('../Profil-entreprise-be/' . $image); ?>" alt="Photo de profil" width="100" height="100">
+
             <?php else: ?>
-                <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="100" height="100">
+                <img src="../Profil-be/default.png" alt="Photo de profil par défaut" width="100" height="100">
             <?php endif; ?>
             <h3 id="<?php echo FIELD_NAME; ?>-value"></h3>
         </div>
@@ -118,6 +119,13 @@ require('../Composant/header.php');
         <div class="bouton">
             <button class="btn btn-postuler">Postuler</button>
             <span class="heart-icon">🤍</span>
+
+                <?php if ($_SESSION['type'] === 'entreprise') : ?>
+                    <form action="../Composant/tableauDeBord-be/deleteOffre.php" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?');">
+                        <input type="hidden" name="id" value="<?php echo $offre[ID_OFFRE]; ?>">
+                        <button type="submit" class="btn btn-danger">Supprimer l'offre</button>
+                    </form>
+                <?php endif; ?>
         </div>
 
         <div class="description">

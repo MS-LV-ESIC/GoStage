@@ -7,7 +7,7 @@ session_start();
 
 // ✅ Basic session validation
 if (!isset($_SESSION['email']) || !isset($_SESSION['type'])) {
-    header('Location: ../connexion.php');
+    header('Location: connexion.php');
     exit();
 }
 

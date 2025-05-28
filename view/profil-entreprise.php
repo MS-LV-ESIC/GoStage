@@ -33,33 +33,108 @@ $image = $user[FIELD_IMAGE] ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil</title>
     <style>
-        body { background-color:#D9D9D9; }
-        tr { padding: 10px; color: black; display: flex; flex-direction: column; align-items: flex-start; width: 300px; }
-        th { text-align: start; }
-        h1 { padding:10px; }
-        .profil { display:flex; }
-        .photo { display:flex; }
-        .uploadPhoto{display:flex; flex-direction:column}
-        .post { display:flex; flex-direction: row; align-items: flex-start; }
-        .aPropos { background-color:white; padding: 10px; }
-                .post {
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Nunito", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: <weight>;
+            font-style: normal;
+        }
+
+
+        body {
+            background-color: #D9D9D9;
+        }
+
+
+        table {}
+
+
+        button {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+
+        tr {
+            /* to change remove the point . */
+            padding: 10px;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 300px;
+            gap: 5px;
+        }
+
+
+        th {
+            text-align: start
+        }
+
+
+        h1 {
+            padding: 10px
+        }
+
+
+        #updateImageForm .form-control {
+            background-color: var(--bs-body-bg, #fff);
+            color: var(--bs-body-color, #212529);
+            border: var(--bs-border-width, 1px) solid var(--bs-border-color, #dee2e6);
+            border-radius: var(--bs-border-radius, 0.375rem);
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            max-width: 220px
+        }
+        .uploadPhoto{
+            margin-right:16px;
+        }
+
+        .profil {
+            display: flex;
+        }
+
+
+        .info {
+            width: 45%;
+            margin: 25px;
+            position: fixed;
+        }
+
+
+        .photo {
+            display: flex;
+        }
+
+
+        .post {
             display: flex;
             flex-direction: row;
             align-items: flex-start;
         }
-        .AjouteOffre{
 
-            margin: 20px;
+
+        .Offre {
+            background-color: white;
+            width: 50%;
+            padding: 2%;
+            margin-left: 48%;
+            padding-bottom: 60%;
+        }
+        .AjouteOffre{
+            margin:20px
         }
     </style>
 </head>
 <body>
 
 <div class="profil">
-    <div>
+    <div class="info">
         <div class="photo">
 
-            <!-- Permet de telecharger et modifier la photo de profil -->
             <form class="uploadPhoto" id="updateImageForm" action="../Profil-entreprise-be/imageUpdate.php" method="POST" enctype="multipart/form-data">
                 <?php if (!empty($image)) : ?> 
                     <img src="<?php echo htmlspecialchars('../Profil-entreprise-be/' . $image); ?>" alt="Photo de profil" width="250" height="250">
@@ -112,27 +187,12 @@ $image = $user[FIELD_IMAGE] ?? '';
                 </form>
             </div>
 
-            <div class="aPropos">
-                <div class="Offre">
-                    <h1>Nos Offres</h1>
-                    <form class="AjouteOffre" action="ajoutOffres.php" method="post">
-                            <button type="submit" class="btn btn-primary">Ajouter une offre</button>
-                    </form>
-                    <?php 
-                        $id_entreprise = include('../Composant/getId-update-entreprise.php');
-                        $component_mode = 'entreprise';
-                        include("../composant/tableauDeBord.php");
-                    ?>
-                    <p id="Offre-value"></p>
-                </div>
-       
-            </div>
+
 
         </div>
 
-            <div>
-
-                <h1>A propos de Nous</h1>
+            <h1>A propos de Nous</h1>
+            <div class="post">
                 <form 
                     id="updateDataForm" 
                     action="../Profil-entreprise-be/dataUpdate.php" 
@@ -149,8 +209,8 @@ $image = $user[FIELD_IMAGE] ?? '';
                             style="display:none;" 
                             disabled 
                             maxlength="500" 
-                            rows="3" 
-                            cols="80"
+                            rows="2" 
+                            cols="70"
                             ></textarea>
                         <button 
                             type="submit" 
@@ -161,11 +221,21 @@ $image = $user[FIELD_IMAGE] ?? '';
                     </th>
                 </form>
             </div>
-    
-        </div>
+        </div>   
     </div>
-
     
+    <div class="Offre">
+        <h1>Nos Offres</h1>
+        <form class="AjouteOffre" action="ajoutOffres.php" method="post">
+                <button type="submit" class="btn btn-primary">Ajouter une offre</button>
+        </form>
+        <?php 
+            $id_entreprise = include('../Composant/getId-update-entreprise.php');
+            $component_mode = 'entreprise';
+            include("../composant/tableauDeBord.php");
+        ?>
+        <p id="Offre-value"></p>
+    </div>
 </div>
 
 <script>

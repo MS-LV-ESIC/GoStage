@@ -1,21 +1,25 @@
 <?php
+session_start();
 require_once("../db.php");
 require_once("../fieldsNames.php");
 
-$cvPath = '';
-$id = 1; // Replace with session-based or dynamic ID in production
+// Use session for student id:
+$id = $_SESSION['id_etudiant'] ?? null;
+if (!$id) {
+    die("Erreur: ID étudiant manquant.");
+}
 
 if (isset($_FILES[FIELD_CV]) && $_FILES[FIELD_CV]['error'] === 0) {
-    $targetDir = 'cv/';
+    $targetDir = __DIR__ . '/cv/'; // Absolute path
 
     if (!is_dir($targetDir)) {
         mkdir($targetDir, 0755, true);
     }
 
     $filename = basename($_FILES[FIELD_CV]['name']);
-    $cvPath = $targetDir . $filename;
+    $cvPath = 'cv/' . $filename;
 
-    if (move_uploaded_file($_FILES[FIELD_CV]['tmp_name'], $cvPath)) {
+    if (move_uploaded_file($_FILES[FIELD_CV]['tmp_name'], $targetDir . $filename)) {
         $cvPathSafe = mysqli_real_escape_string($conn, $cvPath);
 
         $query = "UPDATE " . ETUDIANT . " SET " . FIELD_CV . " = '$cvPathSafe' WHERE " . ID . " = $id";
@@ -24,18 +28,11 @@ if (isset($_FILES[FIELD_CV]) && $_FILES[FIELD_CV]['error'] === 0) {
             header("Location: ../view/profil.php");
             exit;
         } else {
-            error_log("Erreur SQL : " . mysqli_error($conn));
-            header("Location: ../view/profil.php");
-            exit;
+            die("Erreur SQL : " . mysqli_error($conn));
         }
     } else {
-        error_log("Erreur lors du déplacement du fichier CV.");
-        header("Location: ../view/profil.php");
-        exit;
+        die("Erreur lors du déplacement du fichier CV.");
     }
 } else {
-    error_log("Aucun fichier CV envoyé ou erreur lors de l'envoi.");
-    header("Location: ../view/profil.php");
-    exit;
+    die("Aucun fichier CV envoyé ou erreur lors de l'envoi.");
 }
-?>

@@ -141,7 +141,7 @@ $cv = $user[FIELD_CV] ?? '';
                 <?php if (!empty($image)) : ?> 
                     <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil"  width="220" height="220">
                     <?php else : ?>
-                    <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="220" height="220">
+                    <img src="/GoStage/Profil-be/default.png" alt="Photo de profil par défaut" width="220" height="220">
                 <?php endif; ?>
                 <input type="file" name="<?php echo FIELD_IMAGE; ?>" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Changer la photo</button>
@@ -184,7 +184,7 @@ $cv = $user[FIELD_CV] ?? '';
                         </thead>
                     </table>
                 </form>
-<!-- CV -->
+    <!-- CV -->
                 <form id="updateCvForm" action="../Profil-be/cvUpdate.php" method="POST" enctype="multipart/form-data">
                     <?php if (!empty($cv)) : ?> 
                         <p>CV: <?php echo basename($cv); ?></p>
@@ -200,8 +200,8 @@ $cv = $user[FIELD_CV] ?? '';
             </div>
         </div>
 
-<!-- A Propos -->
-        <h1>A propos de moi</h1>
+        <!-- A Propos -->
+            <h1>A propos de moi</h1>
         <div class="post">
             <form id="updateDataForm" action="../Profil-be/dataUpdate.php" method="POST">
                 <th>
@@ -212,7 +212,7 @@ $cv = $user[FIELD_CV] ?? '';
                     <button type="submit" id="apply-<?php echo FIELD_APROPOS; ?>" style="display:none;" onclick="applyInput('<?php echo FIELD_APROPOS; ?>')">Appliquer</button>
                 </th>
             </form>
-        <p id="<?php echo FIELD_APROPOS; ?>-value"></p>
+            <p id="<?php echo FIELD_APROPOS; ?>-value"></p>
         </div>
     </div>
 
