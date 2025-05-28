@@ -118,7 +118,7 @@ if($profileEtudiant && isset($id_etudiant)){
             flex-direction: column;
             align-items: center;
             max-height: 450px;   /* Set the fixed height you want */
-            overflow-y: auto;    /* Enable vertical scroll if content is taller */
+            /* overflow-y: auto;    Enable vertical scroll if content is taller */
         }
 
         .offre {

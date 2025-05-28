@@ -12,6 +12,7 @@ if (!isset($_SESSION['email']) || $_SESSION['type'] !== 'entreprise') {
 
 // ✅ Get dynamic entreprise ID
 $idEntreprise = include('../Composant/getId-update-entreprise.php');
+$_SESSION['id_entreprise'] = $idEntreprise;
 
 // ✅ Fetch entreprise details
 $query = "SELECT * FROM " . ENTREPRISE . " WHERE " . ID_ENTREPRISE . " = '$idEntreprise'";
@@ -64,6 +65,10 @@ $image = $user[FIELD_IMAGE] ?? '';
                 <input type="file" name="<?php echo FIELD_IMAGE; ?>" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Changer la photo</button>
             </form>
+
+            <form class="offre" action="ajoutOffres.php" method="post">
+                    <button type="submit" class="btn btn-primary">Ajouter une offre</button>
+                </form>
 
             <div>
                 <h1>Profil</h1>

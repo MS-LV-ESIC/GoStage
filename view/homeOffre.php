@@ -2,206 +2,141 @@
 
 require_once("../db.php");
 require_once("../fieldsNames.php");
+
 $id = $_GET['id'];
+
 $query = "SELECT 
-  o.". ID_OFFRE ." AS ". ID_OFFRE .",
-  o.". INTITULE ." AS ". INTITULE .",
-  o.". RENUMERATION ." AS ". RENUMERATION .",
-  o.". FIELD_APROPOS_OFFRE ." AS ". FIELD_APROPOS_OFFRE .",
-  o.". LOCALISATION ." AS ". LOCALISATION .",
+  o." . ID_OFFRE . " AS " . ID_OFFRE . ",
+  o." . INTITULE . " AS " . INTITULE . ",
+  o." . RENUMERATION . " AS " . RENUMERATION . ",
+  o." . FIELD_APROPOS_OFFRE . " AS " . FIELD_APROPOS_OFFRE . ",
+  o." . LOCALISATION . " AS " . LOCALISATION . ",
 
-
-  e.". ID_ENTREPRISE ." AS ". ID_ENTREPRISE .",
-  e.". FIELD_NAME ." AS ". FIELD_NAME .",
-  e.". FIELD_EMAIL ." AS ". FIELD_EMAIL ."
-FROM ". OFFRES ." o
-JOIN ". ENTREPRISE ." e ON o.". ID_ENTREPRISE ." = e.". ID_ENTREPRISE ."
-WHERE o.". ID_OFFRE ." = $id";
-
-
-
-
-$image = $user[FIELD_IMAGE] ?? '';
-require ('../Composant/header.php');
-
-
+  e." . ID_ENTREPRISE . " AS " . ID_ENTREPRISE . ",
+  e." . FIELD_NAME . " AS " . FIELD_NAME . ",
+  e." . FIELD_EMAIL . " AS " . FIELD_EMAIL . ",
+  e." . FIELD_IMAGE . " AS " . FIELD_IMAGE . "
+FROM " . OFFRES . " o
+JOIN " . ENTREPRISE . " e ON o." . ID_ENTREPRISE . " = e." . ID_ENTREPRISE . "
+WHERE o." . ID_OFFRE . " = $id";
 
 $result = mysqli_query($conn, $query);
-
-
-// Вариант 1: одна строка
 $offre = mysqli_fetch_assoc($result);
 
+$image = $offre[FIELD_IMAGE] ?? '';
 
+require('../Composant/header.php');
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-    <script src="https://kit.fontawesome.com/5d4f51e2a9.js" crossorigin="anonymous"></script>
     <title>Offre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Fonts & Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            font-family: "Nunito", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: <weight>;
-            font-style: normal;
+            font-family: 'Nunito', sans-serif;
         }
-
 
         body {
-            background-color: #D9D9D9;
+            background-image: url('https://img.freepik.com/vecteurs-premium/fond-courbe-simple-pour-entreprises-espace-pour-texte_336924-5580.jpg?semt=ais_hybrid&w=740');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
-
-        table {}
-
-
-        button {
-            padding-left: 5px;
-            padding-right: 5px;
+        .offre-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
+        .title img {
+            border-radius: 10px;
+        }
 
-        tr {
-            /* to change remove the point . */
-            padding: 10px;
-            color: black;
+        .title h3 {
+            margin-left: 20px;
+        }
+
+        .job-info {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 300px;
-            gap: 5px;
+            justify-content: space-between;
+            font-size: 18px;
+            margin-top: 15px;
         }
 
-
-        th {
-            text-align: start
-        }
-
-
-        h1 {
-            padding: 10px
-        }
-
-
-        .profil {
+        .bouton {
+            margin-top: 30px;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-
-        .info {
-            width: 38%;
-            margin: 25px;
-            position: fixed;
+        .btn-postuler {
+            background-color: rgba(0, 76, 170, 1);
+            color: white;
         }
 
-
-        .photo {
-            display: flex;
-        }
-
-
-        .post {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-        }
-
-
-        .Offre {
-            background-color: white;
-            width: 58%;
-            padding: 2%;
-            margin-left: 41%;
-            padding-bottom: 60%;
+        .description {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
         }
     </style>
 </head>
+
 <body>
 
-<div class="profil">
-    <div class="info">
-        <div class="photo">
-
-            <form class="uploadPhoto">
-                <?php if (!empty($image)) : ?> 
-                    <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="100" height="100">
-                <?php else : ?>
-                    <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="100" height="100">
-                <?php endif; ?>
-                <h2>
-                    <span id="label-<?php echo FIELD_NAME; ?>">
-                        <span id="<?php echo FIELD_NAME; ?>-value"></span>
-                    </span>
-                </h2>
-            </form>
-
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                <span id="label-<?php echo INTITULE; ?>">
-                                    <span id="<?php echo INTITULE; ?>-value"></span>
-                                </span>
-                            </th>
-
-                            <th>
-                                <span id="label-<?php echo LOCALISATION; ?>">
-                                    Ville : <span id="<?php echo LOCALISATION; ?>-value"></span>
-                                </span>
-                            </th>
-
-                            <th>
-                                <span id="label-<?php echo RENUMERATION; ?>">
-                                    Ruenumeration : <span id="<?php echo RENUMERATION; ?>-value"></span>
-                                </span>
-                            </th>
-
-                            <th>
-                                <span id="label-<?php echo FIELD_APROPOS_OFFRE; ?>">
-                                    <h1>Le poste</h1><br> <span id="<?php echo FIELD_APROPOS_OFFRE; ?>-value"></span>
-                                </span>
-                            </th>
-
-                            
-                        </tr>
-                    </thead>
-                </table>  
-            </div>
+    <div class="offre-container">
+        <div class="title d-flex align-items-center">
+            <?php if (!empty($image)): ?>
+                <img src="<?php echo htmlspecialchars('../Profil-be/' . $image); ?>" alt="Photo de profil" width="100" height="100">
+            <?php else: ?>
+                <img src="../Profil-be/image/default.png" alt="Photo de profil par défaut" width="100" height="100">
+            <?php endif; ?>
+            <h3 id="<?php echo FIELD_NAME; ?>-value"></h3>
         </div>
 
+        <h2 class="mt-4" id="<?php echo INTITULE; ?>-value"></h2>
 
-        
+        <div class="job-info">
+            <span><strong>Ville :</strong> <span id="<?php echo LOCALISATION; ?>-value"></span></span>
+            <span><strong>Rémunération :</strong> <span id="<?php echo RENUMERATION; ?>-value"></span></span>
+        </div>
 
+        <div class="bouton">
+            <button class="btn btn-postuler">Postuler</button>
+            <span class="heart-icon">🤍</span>
+        </div>
+
+        <div class="description">
+            <h4>Description du poste</h4>
+            <p id="<?php echo FIELD_APROPOS_OFFRE; ?>-value"></p>
+        </div>
     </div>
-</div>
 
-<?php
-require('../Composant/footer.php');
-?>
+    <?php require('../Composant/footer.php'); ?>
 
-<script>
+    <script>
+        let offre = <?php echo json_encode($offre); ?>;
 
-let offre = <?php echo json_encode($offre); ?>;
-
-document.getElementById('<?php echo FIELD_NAME; ?>-value').textContent = offre["<?php echo FIELD_NAME; ?>"];
-document.getElementById('<?php echo INTITULE; ?>-value').textContent = offre["<?php echo INTITULE; ?>"];
-document.getElementById('<?php echo FIELD_APROPOS_OFFRE; ?>-value').textContent = offre["<?php echo FIELD_APROPOS_OFFRE; ?>"];
-document.getElementById('<?php echo RENUMERATION; ?>-value').textContent = offre["<?php echo RENUMERATION; ?>"];
-document.getElementById('<?php echo LOCALISATION; ?>-value').textContent = offre["<?php echo LOCALISATION; ?>"];
-
-</script>
+        document.getElementById('<?php echo FIELD_NAME; ?>-value').textContent = offre["<?php echo FIELD_NAME; ?>"];
+        document.getElementById('<?php echo INTITULE; ?>-value').textContent = offre["<?php echo INTITULE; ?>"];
+        document.getElementById('<?php echo FIELD_APROPOS_OFFRE; ?>-value').textContent = offre["<?php echo FIELD_APROPOS_OFFRE; ?>"];
+        document.getElementById('<?php echo RENUMERATION; ?>-value').textContent = offre["<?php echo RENUMERATION; ?>"];
+        document.getElementById('<?php echo LOCALISATION; ?>-value').textContent = offre["<?php echo LOCALISATION; ?>"];
+    </script>
 
 </body>
 </html>
