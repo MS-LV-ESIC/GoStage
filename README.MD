@@ -68,7 +68,7 @@ http://localhost/GoStage/view/connexion.php
 
 
 ---
-### 🏢 Comment lancer
+### Comment lancer
 - **Aller dans le dossier `www` de WampServer**  
   ↳ `C:\wamp64\www`  
   Copiez le dossier `GoStage` dans ce répertoire.
