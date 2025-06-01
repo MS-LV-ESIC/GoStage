@@ -25,7 +25,7 @@ markdown
 5. Accéder au site depuis :
 http://localhost/GoStage/view/connexion.php
 
-yaml
+
 
 ---
 
