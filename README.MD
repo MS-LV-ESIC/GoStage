@@ -22,13 +22,10 @@ Plateforme de mise en relation entre **étudiants** et **entreprises** pour les 
    C:\wamp64\www\GoStage\
 
 markdown
-Копировать
-Редактировать 5. Accéder au site depuis :
+5. Accéder au site depuis :
 http://localhost/GoStage/view/connexion.php
 
 yaml
-Копировать
-Редактировать
 
 ---
 
