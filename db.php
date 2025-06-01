@@ -2,7 +2,7 @@
     $host = 'localhost';
     $user = 'root';
     $password = '';
-    $db = 'newdatabase';
+    $db = 'gostage_database';
 
     $conn = mysqli_connect($host, $user, $password, $db);
 

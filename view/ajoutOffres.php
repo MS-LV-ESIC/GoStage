@@ -133,7 +133,7 @@ $idEntreprise = include('../Composant/getId-update-entreprise.php');
         <button onclick=" location.href='profil-entreprise.php'">Retour au profil</button>
 
     </div>
-
+    <?php require('../Composant/footer.php'); ?>
 </body>
 
 </html>

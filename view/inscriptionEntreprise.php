@@ -53,10 +53,9 @@
             gap: 20px;
         }
     </style>
-    <header>
-        <img src="/Logo_site_stage_-_2-removebg-preview.png" alt="" width="100px">
-        <i class="fa-solid fa-user" style="color: #ffffff; font-size: 150%; margin: 40px;"></i>
-    </header>
+    <?php
+    require_once('../Composant/header.php')
+        ?>
     <div class="container">
         <div class="d-flex justify-content-center align-items-center" style="margin-top: 5%; margin-bottom: 10%;">
 
@@ -104,10 +103,7 @@
 
                 ?>
     </div>
-    <footer>
-        <p>&copy;Tous droits réservés</p>
-        <p>gostage.corp@outlook.com</p>
-    </footer>
+    <?php require('../Composant/footer.php'); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>

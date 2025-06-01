@@ -2,9 +2,9 @@
 session_start();
 require_once("../db.php");
 require_once("../fieldsNames.php");
+require_once('../Composant/getId-update-etudiant.php');
 
 // Use session for student id:
-$id = $_SESSION['id_etudiant'] ?? null;
 if (!$id) {
     die("Erreur: ID étudiant manquant.");
 }

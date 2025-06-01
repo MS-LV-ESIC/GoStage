@@ -38,7 +38,8 @@ if (
         mysqli_stmt_store_result($stmt);
  
         if (mysqli_stmt_num_rows($stmt) > 0) {
-            header("Location: inscription.php?error=mail déjà utilisé");
+            header("Location: ../view/inscription.php?error=mail déjà utilisé");
+            echo "L'adresse e-mail est déjà utilisée.";
             exit();
         }
  

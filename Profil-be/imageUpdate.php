@@ -2,7 +2,7 @@
 require_once('../db.php');
 require_once('../fieldsNames.php');
 
-$imagePath = '';
+
 require_once('../Composant/getId-update-etudiant.php');
 
 
