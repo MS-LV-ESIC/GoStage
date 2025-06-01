@@ -66,6 +66,9 @@ http://localhost/GoStage/view/connexion.php
 - **Création d’offres**  
   ↳ `view/ajoutOffres.php` → `Profil-entreprise-be/addOffre.php`
 
+
+---
+### 🏢 Comment lancer
 - **Aller dans le dossier `www` de WampServer**  
   ↳ `C:\wamp64\www`  
   Copiez le dossier `GoStage` dans ce répertoire.
